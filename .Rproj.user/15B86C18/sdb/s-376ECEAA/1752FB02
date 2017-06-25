@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: statg012\nType: Package\nTitle: statg012: Statistical Inference at UCL\nVersion: 1.0.0\nDate: 2017-06-08\nAuthors@R: c(\n    person(\"Yi\", \"Jin\", email = \"yi.jin.16@ucl.ac.uk\", role = \"aut\"),\n    person(\"Paul\", \"Northrop\", email = \"p.northrop@ucl.ac.uk\",\n    role = c(\"aut\", \"cre\")))\nDescription: Package statg012 introduces some distributions\n    of bayesian inference, which is suitable for students of statg012\n    from UCL.\nLicense: GPL (>= 2)\nLazyData: TRUE\nDepends:\n    R (>= 3.3.3),\nRoxygenNote: 6.0.1\nImports:\n    knitr,\n    devtools,\n    roxygen2,\n    stats,\n    graphics\nSuggests: knitr\n",
+    "created" : 1498249259842.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "43656618",
+    "id" : "1752FB02",
+    "lastKnownWriteTime" : 1498411446,
+    "last_content_update" : 1498411446870,
+    "path" : "~/statg012/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}

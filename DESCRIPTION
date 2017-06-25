@@ -1,0 +1,24 @@
+Package: statg012
+Type: Package
+Title: statg012: Statistical Inference at UCL
+Version: 1.0.0
+Date: 2017-06-08
+Authors@R: c(
+    person("Yi", "Jin", email = "yi.jin.16@ucl.ac.uk", role = "aut"),
+    person("Paul", "Northrop", email = "p.northrop@ucl.ac.uk",
+    role = c("aut", "cre")))
+Description: Package statg012 introduces some distributions
+    of bayesian inference, which is suitable for students of statg012
+    from UCL.
+License: GPL (>= 2)
+LazyData: TRUE
+Depends:
+    R (>= 3.3.3),
+RoxygenNote: 6.0.1
+Imports:
+    knitr,
+    devtools,
+    roxygen2,
+    stats,
+    graphics
+Suggests: knitr

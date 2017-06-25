@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "plot.binbeta <- function(objects, ...) {\n\n  #\n  res <- objects\n  prior <- res$prior\n  posterior <- res$posterior\n  theta <- res$theta\n  x <- cbind(theta, theta)\n  y <- cbind(prior, posterior)\n\n  #\n  user_args <- list(...)\n  leg_text <- c(\"prior\", \"posterior\")\n\n  ### die here\n  if (is.null(user_args$legend)) {\n    graphics::matplot(x, y, ...)\n    graphics::legend(\"topright\", legend = leg_text)\n  } else {\n    graphics::matplot(x, y)\n    graphics::legend(legend = leg_text, ...)\n    }\n}\n",
+    "created" : 1498251750118.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "435877539",
+    "id" : "3026DFDF",
+    "lastKnownWriteTime" : 1498411406,
+    "last_content_update" : 1498411406020,
+    "path" : "~/statg012/R/plot.binbeta.R",
+    "project_path" : "R/plot.binbeta.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -43,9 +43,6 @@ binbeta(6, 2)
 ## example 3.6 : 3 successes in 10 trials and a beta(4,6) prior
 binbeta(4, 6, 10, 3)
 
-## 3 successes in 10 trials and a beta(4,6) prior, do not show the plot
-binbeta(4, 6, 10, 3, plot = FALSE)
-
 }
 \seealso{
 \code{\link{summary.binbeta}} will return summararies of prior

@@ -4,10 +4,10 @@
 #'a beta prior distribution \eqn{\pi ( \theta; a, b )} and a binomial sampling
 #'distribution \eqn{p ( r | \theta )}.
 #'
-#'@param alpha parameter for the beta distribution ( \eqn{\ge 0} ).
-#'@param beta parameter for the beta distribution ( \eqn{\ge 0} ).
 #'@param n the number of trials in binomial distribution.
 #'@param r the number of successes in n trials.
+#'@param alpha parameter for the beta distribution ( \eqn{\ge 0} ).
+#'@param beta parameter for the beta distribution ( \eqn{\ge 0} ).
 #'@param \eqn{\theta} the range of the probability of success.
 #'@return An object of class "\code{binbeta}" is returned.
 #'\item{prior}{the prior distribution, i.e.
@@ -30,17 +30,14 @@
 #'## example 3.6 : 3 successes in 10 trials and a beta(4,6) prior
 #'binbeta(4, 6, 10, 3)
 #'
-#'## 3 successes in 10 trials and a beta(4,6) prior, do not show the plot
-#'binbeta(4, 6, 10, 3, plot = FALSE)
-#'
 #'@export
 
-  binbeta <- function( alpha, beta, n, r, theta = seq(0,1,0.001)) {
+  binbeta <- function(alpha, beta, n, r, theta = seq(0,1,0.001)) {
   #############################################################################
-  #alpha, beta: are parameters of beta distribution of prior ( >0)
-  #theta: the range of the probability of success
   #n: no. of  binomial trials
   #r: no. of successes in n trials (0<= r<= n)
+  #alpha, beta: are parameters of beta distribution of prior ( >0)
+  #theta: the range of the probability of success
 
   if (n < 0) {
    stop("The number of trials n should not smaller than zero")
@@ -73,7 +70,7 @@
                   pos.alpha = pos.alpha,
                   pos.beta = pos.beta)
 
-  class(res) <- "binbeta"
+  class(res) <- "g12post"
   invisible(res)
   }
   #############################################################################
@@ -144,31 +141,8 @@
                      posteror.std.deviation = pos.std,
                      posteror.mode = pos.mode,
                      posteror.quantiles = pos.qtl)
-    class(results) <- "summary.g12binbeta"
+    class(results) <- "summary.g12post"
     invisible(results)
   }
 
-
-  #############################################################################
-  # plots
-
-  #if (plot) {
-  # graphics::plot(posterior ~ theta, type = "l", lwd = 3,
-  #                 xlab = expression(paste(theta,
-  #                                        ": The Probability of Success")),
-  #                ylab = "Probalbility Density Function",
-  #                main = "The Prior, Likelihood and Posterior Distribution",
-  #                col = "red")
-  # lines(prior ~ theta, type = "l", lwd = 3, col = "blue")
-  # lines(likelihood ~ theta,type = "l", lwd = 3, col = "green" )
-
-  # legend("right", legend = c("Posterior Dist.",
-   #                            "Prior Dist. ",
-    #                           "Likelihood Dist."),
-   #        bty = "o",
-   #        cex = 1,
-  #         lty = c(1, 1, 1),
-  #         lwd = c(3, 3, 3),
-   #        col = c("red","blue", "green"))
- # }
 

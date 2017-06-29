@@ -1,0 +1,84 @@
+
+#'
+plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
+                                            "bottom", "bottomleft",
+                                            "left", "topleft",
+                                            "top", "right", "center"),
+                          model = "", ...) {
+
+  if (model == "binbeta") {
+    #
+    res <- x
+    prior <- res$prior
+    posterior <- res$posterior
+    theta <- res$theta
+    x <- cbind(theta, theta)
+    x <- theta
+    y <- cbind(prior, posterior)
+
+    #
+    leg_pos <- match.arg(leg_pos)
+    user_args <- list(...)
+    #
+    my_matplot <- function(xx, yy, lty = 1:2, col = 1, type = "l",
+                           xlab = "theta",ylab = "density", ..., legend, fill,
+                           border, angle, density, box.lwd, box.lty, box.col,
+                           pt.bg, pt.cex, pt.lwd, xjust, yjust, x.intersp,
+                           y.intersp, adj, text.width, text.col, text.font,
+                           merge, trace, ncol, horiz, inset, title.col,
+                           title.adj, seg.len) {
+      graphics::matplot(xx, yy, col = col, xlab = xlab, ylab = ylab,
+                        type = type, lty = lty, ...)
+    }
+    my_legend <- function(pos, lty = 1:2, lwd = 1, col = 1,
+                          legend = c("prior", "posterior"), ..., xlab, ylab,
+                          lend, xlim, ylim, add, verbose, type) {
+      graphics::legend(pos, lty = lty, lwd = lwd, col = col, legend = legend,
+                       ...)
+    }
+    my_matplot(x, y, ...)
+    my_legend(leg_pos, ...)
+
+  }
+
+  if (model == "poigamma") {
+    #
+    res <- x
+    prior <- res$prior
+    posterior <- res$posterior
+    mu <- res$mu
+    x <- cbind(mu, mu)
+    x <- mu
+    y <- cbind(prior, posterior)
+
+    #
+    leg_pos <- match.arg(leg_pos)
+    user_args <- list(...)
+    #
+    my_matplot <- function(xx, yy, lty = 1:2, col = 1, type = "l", xlab = "mu",
+                           ylab = "density", ..., legend, fill, border, angle,
+                           density, box.lwd, box.lty, box.col, pt.bg, pt.cex,
+                           pt.lwd, xjust, yjust, x.intersp, y.intersp, adj,
+                           text.width, text.col, text.font, merge, trace, ncol,
+                           horiz, inset, title.col, title.adj, seg.len) {
+      graphics::matplot(xx, yy, col = col, xlab = xlab, ylab = ylab, type = type,
+                        lty = lty, ...)
+    }
+    my_legend <- function(pos, lty = 1:2, lwd = 1, col = 1,
+                          legend = c("prior", "posterior"), ..., xlab, ylab,
+                          lend, xlim, ylim, add, verbose, type) {
+      graphics::legend(pos, lty = lty, lwd = lwd, col = col, legend = legend,
+                       ...)
+    }
+    my_matplot(x, y, ...)
+    my_legend(leg_pos, ...)
+  }
+
+}
+
+
+
+
+
+
+

@@ -28,7 +28,6 @@ supervised by Paul Northrop.
 You can install statg012 from github, typing the following at the R Console command prompt `>`
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
 install.packages("devtools")
 library(devtools)
 devtools::install_github("yijin71/statg012")
@@ -38,7 +37,6 @@ devtools::install_github("yijin71/statg012")
 
 Then type the following code to help open the main help page
 ```{r Getting started}
-## basic  code
 library(statg012)
 ?statg012
 ```

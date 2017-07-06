@@ -1,5 +1,9 @@
-
+#'Plot shows the prior and posterior distribution
 #'
+#'@param x,y the vectors or matrices of data for ploting
+#'@param leg_pos the place to put the legend
+#'@param model "binbeta", "poigamma" ...
+#'@export
 plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
                                             "bottom", "bottomleft",
                                             "left", "topleft",

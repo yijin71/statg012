@@ -1,4 +1,9 @@
-
+#'Creat the posterior distribution
+#'
+#'@param a paramter of the prior distribution
+#'@param b paramter of the prior distribution
+#'
+#'@export
 posterior <- function(a, b, c, d, model= "") {
   if ( model == "binbeta") {
    res <- binbeta(a, b, c, d)

@@ -4,7 +4,7 @@
 \alias{binbeta}
 \title{Binomial sampling distribution with a beta distribution of prior}
 \usage{
-binbeta(alpha, beta, n, r, theta = seq(0, 1, 0.001))
+binbeta(alpha = 1, beta = 1, n, r, theta = seq(0, 1, 0.001))
 }
 \arguments{
 \item{alpha}{parameter for the beta distribution ( \eqn{\ge 0} ).}
@@ -38,7 +38,7 @@ distribution \eqn{p ( r | \theta )}.
 }
 \examples{
 ## simplest one with 3 successes in 10 trials and a uniform beta(1,1) prior
-binbeta(6, 2)
+binbeta(n = 6, r = 2)
 
 ## example 3.6 : 3 successes in 10 trials and a beta(4,6) prior
 binbeta(4, 6, 10, 3)

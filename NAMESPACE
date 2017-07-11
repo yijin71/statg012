@@ -3,6 +3,7 @@
 S3method(plot,g12post)
 S3method(summary,g12post)
 export(binbeta)
+export(norm)
 export(poigamma)
 export(posterior)
 import(methods)

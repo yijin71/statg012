@@ -9,7 +9,7 @@
 #'The main sources of information about the material in STATG012
 #'are the lecture slides with tutorial sheets, text reading etc available
 #'from the
-#'\href{https://moodle.ucl.ac.uk/course/view.php?id=7610}{STAT012 Moodle page}.
+#'\href{https://moodle.ucl.ac.uk/course/view.php?id=7610}{STATG012 Moodle page}.
 #'The focus of this R package is mainly on R code.
 #'
 #'@docType package

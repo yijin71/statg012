@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ### What does statg012 do?
 
-The goal of `statg012`is to provide R datasets and functions to help students from STATG012 Statistical Inference better understand baysiean inference, compare statistics between prior density and posterior density and see how R can be utilized to plot densities of prior and posterior. It was created by YI
+The goal of `statg012`is to provide R datasets and functions to help students from STATG012 Statistical Inference better understand bayesiean inference, compare statistics between prior density and posterior density and see how R can be utilized to plot densities of prior and posterior. It was created by YI
 JIN as a part of a postgraduate project during the 2016-2017 academic year,
 supervised by Paul Northrop.
 

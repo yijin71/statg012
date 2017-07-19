@@ -4,7 +4,7 @@
 \alias{posterior}
 \title{Creat the posterior distribution}
 \usage{
-posterior(a, b, c, d, model = "")
+posterior(a, b, c, d, ..., n = 4, model = "")
 }
 \arguments{
 \item{a}{paramter of the prior distribution}

@@ -78,6 +78,7 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
     my_legend(leg_pos, ...)
   }
 
+
 }
 
 

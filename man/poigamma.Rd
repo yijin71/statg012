@@ -7,19 +7,33 @@
 poigamma(x, shape, rate, scale = 1/rate)
 }
 \arguments{
-\item{x}{the sample data from poisson distribution  ( \eqn{\g 0} ).}
+\item{x}{the sample data from poisson distribution  (x > 0).}
 
-\item{shape}{shape parameter for the gamma distribution ( \eqn{\g 0} ).}
+\item{shape}{shape parameter for the gamma distribution (> 0).}
 
-\item{rate}{rate parameter for the gamma distribution ( \eqn{\g 0} ).}
+\item{rate}{rate parameter for the gamma distribution (> 0).}
 
-\item{scale}{equals 1 / rate ( \eqn{\g 0} ).}
+\item{scale}{equals 1 / rate (> 0).}
 }
 \value{
-An object of class "\code{poigamma}" is returned.
+An object of class "\code{g12post}" is returned.
 }
 \description{
 Define the posterior distribution function for \eqn{\pi ( \mu | x )}, with
 a gamma prior distribution \eqn{\pi ( \mu; \alpha, \lambda )} and a
-poisson sampling distribution \eqn{L (\mu)}.
+poisson sampling distribution \eqn{f(x; \mu)}.
+}
+\examples{
+## an observation of 10 and an exponential prior
+poigamma(10, 1, 1)
+
+## Example 5.6 from slides 6
+x <- c(2, 10)
+poigamma(x, 4, 1)
+
+}
+\seealso{
+The
+\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{slides}
+of STATG012 on Moodle
 }

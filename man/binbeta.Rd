@@ -18,7 +18,7 @@ binbeta(alpha = 1, beta = 1, n, r, theta = seq(0, 1, 0.001))
 \item{\eqn{\theta}}{the range of the probability of success.}
 }
 \value{
-An object of class "\code{binbeta}" is returned.
+An object of class "\code{g12post}" is returned.
 \item{prior}{the prior distribution, i.e.
 the \eqn{beta(\alpha,\beta)} distribution} \item{likelihood}{the likelihood
 function of r given \eqn{\theta}, i.e. the
@@ -37,6 +37,7 @@ a beta prior distribution \eqn{\pi ( \theta; a, b )} and a binomial sampling
 distribution \eqn{p ( r | \theta )}.
 }
 \examples{
+
 ## simplest one with 3 successes in 10 trials and a uniform beta(1,1) prior
 binbeta(n = 6, r = 2)
 

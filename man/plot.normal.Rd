@@ -5,7 +5,7 @@
 \title{plot of normal}
 \usage{
 \method{plot}{normal}(x, y, leg_pos = c("topright", "bottomright", "bottom",
-  "bottomleft", "left", "topleft", "top", "right", "center"), ...)
+  "bottomleft", "left", "topleft", "top", "right", "center"), which = "", ...)
 }
 \description{
 plot of normal
@@ -19,5 +19,7 @@ plot.normal(exmp1)
 
 ## if mu and sigma  are unknown
 exmp2 <- normal(xx,m = 25, s = sqrt(10), a = 4, b = 1)
-plot.normal(exmp2)
+plot.normal(exmp2, which = "1")
+plot.normal(exmp2, which = "2", xlim =range(16:32), ylim =range(0:10))
+
 }

@@ -7,7 +7,11 @@
 normaltest(x, theta, a, b)
 }
 \arguments{
-\item{theta}{}
+\item{theta}{the parameter for hypothesis testing.}
+
+\item{a}{type I error}
+
+\item{b}{typp II error}
 }
 \description{
 Bayesian hypothesis testing with Normal distribution

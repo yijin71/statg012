@@ -1,8 +1,10 @@
 #' Bayesian hypothesis testing with Normal distribution
 #'
-#'@param x
-#'@param theta
 #'
+#'@param x results from normal
+#'@param theta the parameter for hypothesis testing.
+#'@param a type I error
+#'@param b typp II error
 #'@export
 normaltest <- function(x, theta, a, b) {
   res <-x

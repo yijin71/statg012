@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalproblem.r
 \name{normalprob}
 \alias{normalprob}
-\title{show problem of normal when mu and sigma are unknow}
+\title{show problem of normal when mu and sigma are unknown}
 \usage{
 normalprob(x, m, s, alpha, beta)
 }
@@ -13,7 +13,7 @@ normalprob(x, m, s, alpha, beta)
 distribution}
 }
 \description{
-show problem of normal when mu and sigma are unknow
+show problem of normal when mu and sigma are unknown
 }
 \examples{
 ##

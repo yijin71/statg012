@@ -1,4 +1,4 @@
-#' show problem of normal when mu and sigma are unknow
+#' show problem of normal when mu and sigma are unknown
 #'
 #'@param m and s are parameters of mu which follows normal distribution
 #'@param alpha and beta are parameters of tau(1/sigma^2) which follows gamma

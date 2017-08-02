@@ -7,6 +7,8 @@
 normaltest(x, theta, a, b)
 }
 \arguments{
+\item{x}{results from normal}
+
 \item{theta}{the parameter for hypothesis testing.}
 
 \item{a}{type I error}

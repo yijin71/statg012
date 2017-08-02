@@ -6,11 +6,11 @@
 #'##plot example5.6
 #'x <- rnorm(9, sd = 2)
 #'xx <- x- mean(x) + 20
-#'exmp1 <- normal(xx, m = 25, s = sqrt(10), sigma = 2)
+#'exmp1 <- normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
 #'plot.normal(exmp1)
 #'
 #'## if mu and sigma  are unknown
-#'exmp2 <- normal(xx,m = 25, s = sqrt(10), a = 4, b = 1)
+#'exmp2 <- normnorm(xx,m = 0.5, s = 1, a = 2, b = 2)
 #'plot.normal(exmp2, which = "1")
 #'plot.normal(exmp2, which = "2", xlim =range(16:32), ylim =range(0:10))
 #'
@@ -28,22 +28,21 @@ plot.normal <- function (x, y, leg_pos = c("topright", "bottomright",
 # mu, and mu.prior
   mu <- res$mu
   mu.prior <- res$mu.prior
+  mu.pos <- res$mu.pos
 #############################################################################
 # tau, tau range and tau.prior
   tau <- res$tau
   tau.prior <-res$tau.prior
-  prior <- res$prior
+  tau.pos <- res$tau.pos
 
+  prior <- res$prior
   posterior <- res$posterior
 
-  x <- cbind(mu, mu, mu)
-  x <- mu
-  y <- cbind(mu.prior, prior, posterior)
+  x <- cbind(mu, mu)
+  y <- cbind(mu.prior, mu.pos)
 
-  xx <- cbind(tau,tau,tau)
-  xx <- tau
-  yy <- cbind(tau.prior, prior, posterior)
-
+  xx <- cbind(tau, tau)
+  yy <- cbind(tau.prior, tau.pos)
 
   #
   leg_pos <- match.arg(leg_pos)
@@ -58,10 +57,10 @@ plot.normal <- function (x, y, leg_pos = c("topright", "bottomright",
                          title.adj, seg.len, nlevels, levels, labels, labcex, drawlabels,
                          method, vfont, frame.plot, zlim) {
     graphics::matplot(xx, yy, col = col, xlab = xlab, ylab = ylab,
-                      type = type, lty = lty...)
+                      type = type, lty = lty, ...)
   }
   my_legend <- function(pos, lty = 1:3, lwd = 1, col = 1,
-                        legend = c("mu.prior","prior", "posterior"), ..., xlab, ylab,
+                        legend = c("mu.prior","mu.posterior"), ..., xlab, ylab,
                         lend, xlim, ylim, add, verbose, type, nlevels, levels,
                         labels, labcex, drawlabels,
                         method, vfont, frame.plot, zlim) {
@@ -80,7 +79,7 @@ plot.normal <- function (x, y, leg_pos = c("topright", "bottomright",
                       type = type, lty = lty, ...)
   }
   my_legend2 <- function(pos, lty = 1:3, lwd = 1, col = 1,
-                        legend = c("tau.prior","prior", "posterior"), ..., xlab, ylab,
+                        legend = c("tau.prior","tau.posterior"), ..., xlab, ylab,
                         lend, xlim, ylim, add, verbose, type,nlevels, levels,
                         labels, labcex, drawlabels,
                         method, vfont, frame.plot, zlim) {
@@ -109,19 +108,29 @@ plot.normal <- function (x, y, leg_pos = c("topright", "bottomright",
   }
 
   if(which == "1") {
-
-  par(mfrow=c(2,1))
-
+  par(mfrow=c(1,1))
   my_matplot(x, y, ...)
   my_legend(leg_pos, ...)
-  my_matplot2(xx, yy, ...)
-  my_legend2(leg_pos, ...)
   }
 
   if (which == "2") {
     par(mfrow=c(1,1))
+    my_matplot2(xx, yy, ...)
+    my_legend2(leg_pos, ...)
+  }
+
+  if (which == "3") {
+    par(mfrow=c(1,1))
   contour(mu, tau, outer(mu.prior,tau.prior),...)
   my_legend3(leg_pos, ...)
+
+  }
+
+  if (which == "4") {
+    par(mfrow=c(1,1))
+    contour(mu,tau,outer(mu.pos, tau.pos),...)
+    my_legend3(leg_pos, ...)
+
   }
 
   } else {

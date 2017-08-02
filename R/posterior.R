@@ -6,7 +6,7 @@
 #'@export
 posterior  <- function(a, b, c, d,..., n = 4, model = ""){
 
-  if (n > 4 & model == "binbeta") {
+  if (n > 4 & model == "binombeta") {
     res <- binbeta(alpha = a, beta = b, n = c, r = d, theta = seq(0, ..., 0.01))
   }
   if (n > 4 & model == "gamma") {
@@ -16,7 +16,7 @@ posterior  <- function(a, b, c, d,..., n = 4, model = ""){
     res <-  normal(x = a, m = b , s = c, alpha = d, beta = ... )
   }
 
-  if (n == 4 & model == "binbeta") {
+  if (n == 4 & model == "binombeta") {
     res <- binbeta(alpha = a, beta = b, n = c, r = d)
   }
 

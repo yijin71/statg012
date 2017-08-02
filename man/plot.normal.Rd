@@ -14,11 +14,11 @@ plot of normal
 ##plot example5.6
 x <- rnorm(9, sd = 2)
 xx <- x- mean(x) + 20
-exmp1 <- normal(xx, m = 25, s = sqrt(10), sigma = 2)
+exmp1 <- normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
 plot.normal(exmp1)
 
 ## if mu and sigma  are unknown
-exmp2 <- normal(xx,m = 25, s = sqrt(10), a = 4, b = 1)
+exmp2 <- normnorm(xx,m = 0.5, s = 1, a = 2, b = 2)
 plot.normal(exmp2, which = "1")
 plot.normal(exmp2, which = "2", xlim =range(16:32), ylim =range(0:10))
 

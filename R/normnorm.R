@@ -22,20 +22,18 @@
 #' ## this example is from slides6 Example 5.7
 #' ## generate a sample of 9 from a normal distribution with sd=2
 #' x <- rnorm(9, sd = 2)
-#'
 #' ## the observed sample mean is 20
 #' xx <- x- mean(x) + 20
-#'
 #' ## find the posterior density
-#' normal(xx, m = 25, s = sqrt(10), sigma = 2)
+#' normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
 #'
 #'@seealso The
 #'\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{slides}
 #'of STATG012 on Moodle
 #'
-#'@export normal
+#'@export normnorm
 
-normal <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
+normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
                      sigma = NULL) {
   if (is.null(sigma)) {
       if (is.null(alpha) | is.null(beta)) {
@@ -44,19 +42,17 @@ normal <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
             should be known")
       } else {
 
-           z <- stats::qnorm(0.9999, m, s)
-           mu <- seq(0, z, z/1000)
-
 #####################################################################
 #prior
-
+        z <- stats::qnorm(0.9999, m, s)
+        mu <- seq(0, z, z/1000)
         mu.prior <- stats::dnorm(mu, m, s)
         zz<- stats::qgamma(0.9999, alpha, beta)
         tau <- seq(0, zz, zz/length(mu))
         tau <- tau[1:length(tau) - 1]
         tau.prior <- stats::dgamma(tau, alpha, beta)
-        prior <- tau^(alpha - 0.5) * exp(-beta * tau) *
-                 exp(-s * tau * (mu - m)^2 / 2)
+        prior <- tau^(alpha - 0.5) * exp(- beta * tau) *
+                 exp(-0.5 * s * tau * (mu - m)^2)
 ######################################################################
 #likelihood x~N(mu, tao^-1)
         n <- length(x)
@@ -72,8 +68,13 @@ normal <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
         pos.alpha <- alpha + n/2
         pos.beta <- beta + 0.5 * (n * s_var +
                                   (s * n * (x_mean - m)^2 /pos.s))
-        posterior <- tau^(pos.alpha - 0.5) * exp(-tau * pos.beta) *
-          exp(-tau/2 * pos.s * (mu - pos.beta)^2)
+
+        mu.pos <- stats::dnorm(mu, pos.m, pos.s)
+        tau.pos <- stats::dgamma(tau, pos.alpha, pos.beta)
+
+
+        posterior <- tau.pos ^(pos.alpha - 0.5) * exp(-tau.pos * pos.beta) *
+          exp(-tau.pos/2 * pos.s * (mu.pos - pos.beta)^2)
 
         res <- list( mu = mu,
                      tau = tau,
@@ -81,6 +82,8 @@ normal <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
                      tau.prior = tau.prior,
                      prior = prior,
                      likelihood = likelihood,
+                     mu.pos = mu.pos,
+                     tau.pos = tau.pos,
                      posterior = posterior,
                      pos.m =  pos.m,
                      pos.s =  pos.s,

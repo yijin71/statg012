@@ -40,6 +40,9 @@ xx <- x- mean(x) + 20
 ## find the posterior density
 normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
 
+##
+x <- rnorm(13, mean = 2, sd = 0.5)
+a <- normnorm(x, m = 0, s = 1, alpha = 1, beta = 1)
 }
 \seealso{
 The

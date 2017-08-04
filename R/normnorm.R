@@ -27,6 +27,9 @@
 #' ## find the posterior density
 #' normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
 #'
+#' ##
+#' x <- rnorm(13, mean = 2, sd = 0.5)
+#' a <- normnorm(x, m = 0, s = 1, alpha = 1, beta = 1)
 #'@seealso The
 #'\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{slides}
 #'of STATG012 on Moodle
@@ -35,6 +38,8 @@
 
 normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
                      sigma = NULL) {
+
+  model <- "normnorm"
   if (is.null(sigma)) {
       if (is.null(alpha) | is.null(beta)) {
       stop ("Since sigma is unknown, the precision follows a
@@ -42,39 +47,43 @@ normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
             should be known")
       } else {
 
-#####################################################################
-#prior
-        z <- stats::qnorm(0.9999, m, s)
-        mu <- seq(0, z, z/1000)
-        mu.prior <- stats::dnorm(mu, m, s)
-        zz<- stats::qgamma(0.9999, alpha, beta)
-        tau <- seq(0, zz, zz/length(mu))
-        tau <- tau[1:length(tau) - 1]
-        tau.prior <- stats::dgamma(tau, alpha, beta)
-        prior <- tau^(alpha - 0.5) * exp(- beta * tau) *
-                 exp(-0.5 * s * tau * (mu - m)^2)
-######################################################################
-#likelihood x~N(mu, tao^-1)
+        z <- stats::qgamma(0.9999, shape = alpha, rate = beta)
+        tau <- seq(0,z, length.out = 1000)
+        tau.prior <- stats::dgamma(tau, shape = alpha, rate = beta)
+        muu <- m + 5
+        mul <- m - 5
+        mu <- seq(mul, muu, length.out = 1000)
+        mu.prior <- (beta + s * 0.5 * (mu - m) ^ 2) ^ (- alpha - 0.5)
+
+        prior <- tau ^ (alpha - 0.5) * exp(- beta * tau) *
+          exp(-0.5 * tau * s * (mu - m) ^ 2)
+
+        ######################################################################
+        #likelihood x~N(mu, tao^-1)
+
         n <- length(x)
         x_mean <- mean(x)
-        s_var <- 1/n * sum((x - x_mean)^2)
-        likelihood <- tau^(n/2) * exp((-tau/2) *
-                                      (n * s_var + n * (x_mean-mu) ^2))
+        s_var <- 1 / n * sum((x - x_mean) ^ 2)
+        ss <- n * s_var
+        likelihood <- tau ^ (n / 2) * exp((-tau/2) *
+                                            (n * s_var + n * (x_mean-mu) ^2))
 
-######################################################################
-#posterior
-        pos.m <- (s * m + n * x_mean)/(s + n)
+        ######################################################################
+        #posterior
         pos.s <- s + n
+        pos.m <- (s * m + n * x_mean) / pos.s
         pos.alpha <- alpha + n/2
-        pos.beta <- beta + 0.5 * (n * s_var +
-                                  (s * n * (x_mean - m)^2 /pos.s))
+        pos.beta <- beta + 0.5 * (ss + (s * n * (x_mean - m)^2 /pos.s))
 
-        mu.pos <- stats::dnorm(mu, pos.m, pos.s)
-        tau.pos <- stats::dgamma(tau, pos.alpha, pos.beta)
+        tau.posterior <- stats::dgamma(tau, pos.alpha, pos.beta)
 
+        mu.posterior <- stats::dt(mu, df = 2 * pos.alpha)
 
-        posterior <- tau.pos ^(pos.alpha - 0.5) * exp(-tau.pos * pos.beta) *
-          exp(-tau.pos/2 * pos.s * (mu.pos - pos.beta)^2)
+        pos1 <- pos.alpha - 0.5
+        pos2 <- tau * pos.s * 0.5 * (mu - pos.m) ^ 2
+        pos3 <- tau * (beta + ss * 0.5)
+        pos4 <- 0.5 * tau * (s * (m ^ 2) + n * (x_mean ^2) + pos.s * (pos.m ^ 2))
+        posterior <- tau ^ pos1 * exp(-pos2) * exp(-pos3) * exp(-pos4)
 
         res <- list( mu = mu,
                      tau = tau,
@@ -82,30 +91,30 @@ normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
                      tau.prior = tau.prior,
                      prior = prior,
                      likelihood = likelihood,
-                     mu.pos = mu.pos,
-                     tau.pos = tau.pos,
+                     mu.posterior = mu.posterior,
+                     tau.posterior = tau.posterior,
                      posterior = posterior,
                      pos.m =  pos.m,
                      pos.s =  pos.s,
                      pos.alpha = pos.alpha,
-                     pos.beta = pos.beta)
+                     pos.beta = pos.beta,
+                     model = model)
 
-        cat(paste("Posterior mu0      : ", round(pos.m,4),"\n",sep=""))
-        cat(paste("Posterior lamda0   : ", round(pos.s,4),"\n",sep=""))
+        cat(paste("Posterior mu       : ", round(pos.m,4),"\n",sep=""))
+        cat(paste("Posterior s        : ", round(pos.s,4),"\n",sep=""))
         cat(paste("Posterior alpha    : ", round(pos.alpha,4),"\n",sep=""))
         cat(paste("Posterior beta     : ", round(pos.beta,4),"\n",sep=""))
 
-        class(res) <- "g12post"
+         class(res) <- "g12post"
         invisible(res)
-      }
+        }
 
    } else {
 
     if (is.null(mu)) {
-     z <- stats::qnorm(0.9999, m, s)
-     mu <- seq(0, z, z/1000)
+     z <- stats::qnorm(c(0.0001,0.9999), m, s)
+     mu <- seq(z[1], z[2], length.out = 1000)
      }
-
   prior <- stats::dnorm(mu, m, s)
   pri.precision <- 1 / s^2
   n <- length(x)
@@ -114,20 +123,23 @@ normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
 
   pos.precision <- pri.precision + (n / sigma ^ 2)
   pos.var <- 1 / pos.precision
-  pos.sd <- sqrt(pos.var)
+  pos.std <- sqrt(pos.var)
   pos.mean <- (pri.precision / pos.precision * m) + (
     (n / sigma ^ 2) / pos.precision * x_mean)
 
-  posterior <- stats::dnorm(mu, pos.mean, pos.sd)
+  posterior <- stats::dnorm(mu, pos.mean, pos.std)
 
   res <- list( mu = mu,
                prior = prior,
                likelihood = likelihood,
                posterior = posterior,
-               pos.precision = pos.precision,
+               pri.precision = pri.precision,
+               pri.mean = m,
+               pri.std = s,
+               pos.precision= pos.precision,
                pos.mean = pos.mean,
-               pos.var = pos.var,
-               pos.sd = pos.sd)
+               pos.std = pos.std,
+               model = model)
 
   cat(paste("Posterior precision      : ",round(pos.precision,4),"\n",sep=""))
   cat(paste("Posterior mean           : ",round(pos.mean,4),"\n",sep=""))

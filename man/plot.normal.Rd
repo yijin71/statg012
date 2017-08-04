@@ -5,7 +5,8 @@
 \title{plot of normal}
 \usage{
 \method{plot}{normal}(x, y, leg_pos = c("topright", "bottomright", "bottom",
-  "bottomleft", "left", "topleft", "top", "right", "center"), which = "", ...)
+  "bottomleft", "left", "topleft", "top", "right", "center"), which = c(1:4),
+  ...)
 }
 \description{
 plot of normal
@@ -15,11 +16,19 @@ plot of normal
 x <- rnorm(9, sd = 2)
 xx <- x- mean(x) + 20
 exmp1 <- normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
-plot.normal(exmp1)
+plot.normal(exmp1, leg_pos = "right", cex = 0.8)
 
 ## if mu and sigma  are unknown
-exmp2 <- normnorm(xx,m = 0.5, s = 1, a = 2, b = 2)
-plot.normal(exmp2, which = "1")
-plot.normal(exmp2, which = "2", xlim =range(16:32), ylim =range(0:10))
-
+y <- rnorm(13, mean = 2, sd = 0.5)
+exmp2 <- normnorm(y, m = 0.5, s = 1, a = 2, b = 2)
+## show the first plot : prior and posterior distribution of mu
+plot.normal(exmp2, which = 1)
+## show the second plot : prior and posterior distribution of tau
+plot.normal(exmp2, which = 2, col = 1:2)
+## show the third plot : Prior Contour
+plot.normal(exmp2, which = 3, main = "Prior Contour",
+           xlim = range(-3:3),ylim = range(0:3) )
+## show the third plot : Posterior Contour
+plot.normal(exmp2, which = 4, main = "Posterior Contour",
+           xlim = range(-3:3), ylim = range(1:5))
 }

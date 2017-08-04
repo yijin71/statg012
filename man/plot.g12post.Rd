@@ -5,7 +5,8 @@
 \title{Plot shows the prior and posterior distribution}
 \usage{
 \method{plot}{g12post}(x, y, leg_pos = c("topright", "bottomright", "bottom",
-  "bottomleft", "left", "topleft", "top", "right", "center"), ...)
+  "bottomleft", "left", "topleft", "top", "right", "center"), which = c(1:4),
+  ...)
 }
 \arguments{
 \item{x, y}{the vectors or matrices of data for ploting}

@@ -54,7 +54,8 @@ summary.g12post <- function(objects, ...) {
   }
   ######################################################################
 
-  results <- list (prior.variance = pri.var,
+  results <- list (pri.mean = pri.mean,
+                   prior.variance = pri.var,
                    prior.std.deviation = pri.std,
                    prior.quantiles = pri.qtl,
                    posteror.mean = pos.mean,
@@ -101,7 +102,8 @@ summary.g12post <- function(objects, ...) {
       cat("\n")
     }
 
-    results <- list (prior.variance = pri.var,
+    results <- list (pri.mean = pri.mean,
+                     prior.variance = pri.var,
                      prior.std.deviation = pri.std,
                      prior.quantiles = pri.qtl,
                      posteror.mean = pos.mean,
@@ -149,7 +151,8 @@ summary.g12post <- function(objects, ...) {
       cat("\n")
     }
 
-    results <- list (prior.variance = pri.var,
+    results <- list (pri.mean = pri.mean,
+                     prior.variance = pri.var,
                      prior.std.deviation = pri.std,
                      prior.quantiles = pri.qtl,
                      posteror.mean = pos.mean,
@@ -158,5 +161,89 @@ summary.g12post <- function(objects, ...) {
                      posteror.quantiles = pos.qtl)
     class(results) <- "g12post"
     invisible(results)
+  }
+
+  if (objects$model == "normnorm"){
+    res <- objects
+    if (length(res) > 11) {
+      pos.m <- res$pos.m
+      pos.s <- res$pos.s
+      pos.alpha <- res$pos.alpha
+      pos.beta <- res$pos.beta
+
+      x.mean <- pos.m
+      x.var <- pos.beta /(pos.s * (pos.alpha - 1))
+      x.std <- sqrt(x.var)
+      tau.mean <- pos.alpha / pos.beta
+      tau.var <- pos.alpha / (pos.beta^2)
+      tau.std <- sqrt(tau.var)
+
+      cat(paste("X Mean              : ",round(x.mean, 4), "\n"))
+      cat(paste("X Variance          : ",round(x.var, 4), "\n"))
+      cat(paste("X Std. Deviation    : ",round(x.std, 4), "\n"))
+      cat("\n")
+      cat(paste("Tau Mean      : ",round(tau.mean, 4), "\n"))
+      cat(paste("Tau Variance  : ",round(tau.var, 4), "\n"))
+      cat(paste("Tau Deviation : ",round(tau.std, 4), "\n"))
+
+       results <- list (x.mean = x.mean,
+                        x.variance = x.var,
+                        x.std.deviation = x.std,
+                        tau.mean = tau.mean,
+                        tau.variance = tau.var,
+                        tau.std.deviation = tau.std
+                         )
+
+      class(results) <- "g12post"
+      invisible(results)
+    } else {
+
+      pri.precision <- res$pri.precision
+      pri.mean <- res$pri.mean
+      pri.std  <- res$pri.std
+      pri.var <- pri.std^2
+      prob <- c(0.0500, 0.2500, 0.5000, 0.7500, 0.9500)
+      pri.qtl <- stats::qnorm(prob, pri.mean, pri.std)
+      cat(paste("Prior Precision      : ",round(pri.precision, 4), "\n"))
+      cat(paste("Prior Mean           : ",round(pri.mean, 4), "\n"))
+      cat(paste("Prior Variance       : ",round(pri.var, 4), "\n"))
+      cat(paste("Prior Std. Deviation : ",round(pri.std, 4), "\n"))
+      cat("prob.", "quantiles","\n")
+      for (i in 1:5) {
+        cat(prob[i],round(pri.qtl[i],4),sep="\t")
+        cat("\n")
+      }
+
+      pos.precision <-res$pos.precision
+      pos.mean <- res$pos.mean
+      pos.std <- res$ pos.std
+      pos.var <- pos.std^2
+
+      pos.qtl <- stats::qnorm(prob, pos.mean, pos.std)
+      cat(paste("Posterior Precision      : ",round(pos.precision, 4), "\n"))
+      cat(paste("Posterior Mean           : ",round(pos.mean, 4), "\n"))
+      cat(paste("Posterior Variance       : ",round(pos.var, 4), "\n"))
+      cat(paste("Posterior Std. Deviation : ",round(pos.std, 4), "\n"))
+      cat("prob.", "quantiles","\n")
+      for (i in 1:5) {
+        cat(prob[i],round(pos.qtl[i],4),sep="\t")
+        cat("\n")
+      }
+
+      results <- list (pri.precision = pri.precision,
+                       pri.mean = pri.mean,
+                       prior.variance = pri.var,
+                       prior.std.deviation = pri.std,
+                       prior.quantiles = pri.qtl,
+                       pos.precision = pos.precision,
+                       posteror.mean = pos.mean,
+                       posteror.variance = pos.var,
+                       posteror.std.deviation = pos.std,
+                       posteror.quantiles = pos.qtl)
+      class(results) <- "g12post"
+      invisible(results)
+
+    }
+
   }
 }

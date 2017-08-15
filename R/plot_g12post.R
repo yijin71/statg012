@@ -1,8 +1,36 @@
-#'Plot shows the prior and posterior distribution
+#'Generic Plotting of Prior and Posterior distribution.
 #'
-#'@param x,y the vectors or matrices of data for ploting
-#'@param leg_pos the place to put the legend
-#'@param model "binbeta", "poigamma" ...
+#'Plot the columns of one matrix against the columns of anothor. These matrices
+#'come from different functions, including \code{\link{binombeta}},
+#' \code{\link{nbinombeta}}, \code{\link{poisgamma}}, \code{\link{gamgam}} and
+#' \code{\link{normnorm}}.
+#'
+#'@param x,y vectors or matrices of data for plotting. The number of row should
+#'match. If one of them are missing, the other is taken as y and an x vector of
+#'1:n is used. Missing values (NAs) are allowed.
+#'@param leg_pos a character vector of legend place.
+#'@param which if matrices are from \code{\link{normnorm}}, a subset of the plots
+#'is required, specify a subset of the numbers 1:6. See below 'Details' for the
+#'different kinds.
+#'@param ... other arguments from \code{\link{matplot}}, \code{\link{legend}}
+#'and \code{\link{contour}} to plotting functions.
+#'@details
+#'The 1 plot shows the prior and posterior distribution of mu.
+#'The 2 plot shows the prior and posterior distribution of tau.
+#'The 3 plot shows the prior contour.
+#'The 4 plot shows the posterior contour.
+#'@examples
+#'## Get the posterior distribution with Gamma-Gamma model and plot.
+#'y <- rgamma(10, shape = 3)
+#'ex <- gamgam(y, a = 3, 4, 1)
+#'plot(ex, leg_pos = "center" , box.lty=0)
+#'## Obtain the posterior distribution with Normal-Gamma model,
+#'## assuming both mu and sigma are unknown.
+#'x <- rnorm(15, mean = 1, sd = 0.5)
+#'ex <- normnorm(y, m = 2, s = 1, a = 1, b = 2)
+#'## show the fourth plot
+#'plot(ex, which = 4, main = "Posterior Contour",
+#'            xlim = range(-3:3), ylim = range(0:3))
 #'@export
 plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
                                            "bottom", "bottomleft",
@@ -46,7 +74,7 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
 
   my_matplot3 <- function(xx, yy, lty = 1:2, col = 1, type = "l",
                           xlab = "tau",ylab = "density",
-                          main = "Prior and Posterior Distribution of mu ",
+                          main = "Prior and Posterior Distribution of tau ",
                           ..., legend, fill,
                           border, angle, density, box.lwd, box.lty, box.col,
                           pt.bg, pt.cex, pt.lwd, xjust, yjust, x.intersp,
@@ -83,7 +111,7 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
                      ...)
   }
 
-  my_legend3 <- function(pos, lty = 1, lwd = 1, col = 1,
+  my_legend4 <- function(pos, lty = 1, lwd = 1, col = 1,
                          legend = c("Contour"), ..., xlab, ylab,
                          lend, xlim, ylim, add, verbose, type,nlevels, levels,
                          labels, labcex, drawlabels,
@@ -104,6 +132,14 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
   }
   if ( model == "binombeta") {
 
+    theta <- res$theta
+    x <- cbind(theta, theta)
+    y <- cbind(prior, posterior)
+    my_matplot(x, y, ...)
+    my_legend(leg_pos, ...)
+  }
+
+  if ( model == "nbinombeta") {
     theta <- res$theta
     x <- cbind(theta, theta)
     y <- cbind(prior, posterior)

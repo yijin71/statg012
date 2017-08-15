@@ -22,12 +22,13 @@
 #' rate parameter for the gamma distribution of posterior.}\item{model}{the
 #' prior and likelihood type to produce the posterior.}
 #'
-#'@source For theory details, based on
-#'\href{http://people.stat.sc.edu/Hitchcock/slides535day5spr2014.pdf}{The
-#'Gamma/Poisson Bayesian Model} and STATG012 slides5 Example5.6 on Moodle
-#'at UCL.
+#'@source
+#'STATG012 slides5 Example5.6 on Moodle at UCL
 #'\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{STATG012
 #' slides5}
+#'@references
+#'Bolstad, W.M. 2007. Introduction to Bayesian Statistics. (2nd ed.).
+#'Hoboken, New Jersey: John Wiley & Sons, Inc.
 #'@seealso \code{\link{summary.g12post}} for summararies of prior
 #'and posterior distribution.
 #'@seealso \code{\link{plot.g12post}} for plots of prior and posterior

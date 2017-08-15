@@ -1,15 +1,21 @@
 
-#' Summarizing binomial sampling distribution with a beta distribution of
-#' prior
+#' Object Summaries
 #'
-#' A function used to produce summaries of prior and poesterior distribution,
-#' based on binomial sampling distribution with a beta distribution of prior.
+#' A generic function used to produce result summaries of the results of various
+#' model fitthing functions. The distinctive models are \code{\link{binombeta}},
+#' \code{\link{nbinombeta}}, \code{\link{poisgamma}}, \code{\link{gamgam}} and
+#' \code{\link{normnorm}} respectively.
 #'
-#' @param objects an object of class "\code{g12post}", usually, a result of a call
-#' to \code{\link{binbeta}}.
-#' @param ... further arguments from other methods
+#' @param objects an object for which a summary is desired.
+#' @param ... additional arguments affecting the summary produced.
 #' @return the function \code{summary.g12post} returns a list of summary
-#' statistics of prior and posterior distribution, repectively.
+#' statistics such as mean, variance and quantiles of prior and posterior
+#' distribution, repectively.
+#' @examples
+#' ## Obtain the posterior distribution with binomial-beta model and summary
+#' ## it
+#' ep1 <- binombeta(alpha = 1, beta = 2, n = 10, r = 3)
+#' summary(ep1)
 #' @export
 summary.g12post <- function(objects, ...) {
 
@@ -66,6 +72,59 @@ summary.g12post <- function(objects, ...) {
   invisible(results)
   }
 
+  if(objects$model == "nbinombeta") {
+    res <- objects
+    ##statistics of prior function
+    pri.alpha <- res$pri.alpha
+    pri.beta <- res$pri.beta
+    pri.mean <- pri.alpha / (pri.alpha+pri.beta)
+    pri.var <- (pri.alpha * pri.beta) /
+      ((pri.alpha + pri.beta) ^ 2 * (pri.alpha + pri.beta +1))
+    pri.std <- sqrt(pri.var)
+    prob <- c(0.0500, 0.2500, 0.5000, 0.7500, 0.9500)
+    pri.qtl <- stats::qbeta(prob, pri.alpha, pri.beta)
+
+    cat(paste("Prior Mean           : ",round(pri.mean, 4), "\n"))
+    cat(paste("Prior Variance       : ",round(pri.var, 4), "\n"))
+    cat(paste("Prior Std. Deviation : ",round(pri.std, 4), "\n"))
+    cat("prob.", "quantiles","\n")
+    for (i in 1:5) {
+      cat(prob[i],round(pri.qtl[i],3),sep="\t")
+      cat("\n")
+    }
+    cat("\n")
+    ##statistics of posterior function
+    pos.alpha <- res$pos.alpha
+    pos.beta <- res$pos.beta
+    pos.mean <- pos.alpha/ (pos.alpha + pos.beta)
+    pos.var <- (pos.alpha * pos.beta) /
+      ((pos.alpha + pos.beta) ^ 2 * (pos.alpha + pos.beta +1))
+    pos.std <- sqrt(pos.var)
+    prob <- c(0.0500, 0.2500, 0.5000, 0.7500, 0.9500)
+    pos.qtl <- stats::qbeta(prob, pos.alpha, pos.beta)
+
+    cat(paste("Posterior Mean           : ",round(pos.mean, 4), "\n"))
+    cat(paste("Posterior Variance       : ",round(pos.var, 4), "\n"))
+    cat(paste("Posterior Std. Deviation : ",round(pos.std, 4), "\n"))
+    cat("prob.", "quantiles","\n")
+    for (i in 1:5) {
+      cat(prob[i],round(pos.qtl[i],4),sep="\t")
+      cat("\n")
+    }
+    ######################################################################
+
+    results <- list (pri.mean = pri.mean,
+                     prior.variance = pri.var,
+                     prior.std.deviation = pri.std,
+                     prior.quantiles = pri.qtl,
+                     posteror.mean = pos.mean,
+                     posteror.variance = pos.var,
+                     posteror.std.deviation = pos.std,
+                     posteror.quantiles = pos.qtl)
+    class(results) <- "g12post"
+    invisible(results)
+  }
+
   if (objects$model == "poisgamma") {
     res <- objects
     pri.s <- res$pri.shape
@@ -114,6 +173,8 @@ summary.g12post <- function(objects, ...) {
     invisible(results)
 
   }
+
+
 
   if (objects$model == "gamgam"){
     res <- objects

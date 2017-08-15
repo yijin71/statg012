@@ -2,19 +2,48 @@
 % Please edit documentation in R/plot_g12post.R
 \name{plot.g12post}
 \alias{plot.g12post}
-\title{Plot shows the prior and posterior distribution}
+\title{Generic Plotting of Prior and Posterior distribution.}
 \usage{
 \method{plot}{g12post}(x, y, leg_pos = c("topright", "bottomright", "bottom",
   "bottomleft", "left", "topleft", "top", "right", "center"), which = c(1:4),
   ...)
 }
 \arguments{
-\item{x, y}{the vectors or matrices of data for ploting}
+\item{x, y}{vectors or matrices of data for plotting. The number of row should
+match. If one of them are missing, the other is taken as y and an x vector of
+1:n is used. Missing values (NAs) are allowed.}
 
-\item{leg_pos}{the place to put the legend}
+\item{leg_pos}{a character vector of legend place.}
 
-\item{model}{"binbeta", "poigamma" ...}
+\item{which}{if matrices are from \code{\link{normnorm}}, a subset of the plots
+is required, specify a subset of the numbers 1:6. See below 'Details' for the
+different kinds.}
+
+\item{...}{other arguments from \code{\link{matplot}}, \code{\link{legend}}
+and \code{\link{contour}} to plotting functions.}
 }
 \description{
-Plot shows the prior and posterior distribution
+Plot the columns of one matrix against the columns of anothor. These matrices
+come from different functions, including \code{\link{binombeta}},
+\code{\link{nbinombeta}}, \code{\link{poisgamma}}, \code{\link{gamgam}} and
+\code{\link{normnorm}}.
+}
+\details{
+The 1 plot shows the prior and posterior distribution of mu.
+The 2 plot shows the prior and posterior distribution of tau.
+The 3 plot shows the prior contour.
+The 4 plot shows the posterior contour.
+}
+\examples{
+## Get the posterior distribution with Gamma-Gamma model and plot.
+y <- rgamma(10, shape = 3)
+ex <- gamgam(y, a = 3, 4, 1)
+plot(ex, leg_pos = "center" , box.lty=0)
+## Obtain the posterior distribution with Normal-Gamma model,
+## assuming both mu and sigma are unknown.
+x <- rnorm(15, mean = 1, sd = 0.5)
+ex <- normnorm(y, m = 2, s = 1, a = 1, b = 2)
+## show the fourth plot
+plot(ex, which = 4, main = "Posterior Contour",
+           xlim = range(-3:3), ylim = range(0:3))
 }

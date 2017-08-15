@@ -61,7 +61,7 @@ plot(ex, lty = 1:2, col = c(4,2))
 
 }
 \references{
-Bolstad, W.M (2007). Introduction to Bayesian Statistics. (2nd ed.).
+Bolstad, W.M. 2007. Introduction to Bayesian Statistics. (2nd ed.).
 Hoboken, New Jersey: John Wiley & Sons, Inc.
 }
 \seealso{

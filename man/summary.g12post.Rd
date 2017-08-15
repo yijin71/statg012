@@ -2,22 +2,29 @@
 % Please edit documentation in R/summary_g12post.R
 \name{summary.g12post}
 \alias{summary.g12post}
-\title{Summarizing binomial sampling distribution with a beta distribution of
-prior}
+\title{Object Summaries}
 \usage{
 \method{summary}{g12post}(objects, ...)
 }
 \arguments{
-\item{objects}{an object of class "\code{g12post}", usually, a result of a call
-to \code{\link{binbeta}}.}
+\item{objects}{an object for which a summary is desired.}
 
-\item{...}{further arguments from other methods}
+\item{...}{additional arguments affecting the summary produced.}
 }
 \value{
 the function \code{summary.g12post} returns a list of summary
-statistics of prior and posterior distribution, repectively.
+statistics such as mean, variance and quantiles of prior and posterior
+distribution, repectively.
 }
 \description{
-A function used to produce summaries of prior and poesterior distribution,
-based on binomial sampling distribution with a beta distribution of prior.
+A generic function used to produce result summaries of the results of various
+model fitthing functions. The distinctive models are \code{\link{binombeta}},
+\code{\link{nbinombeta}}, \code{\link{poisgamma}}, \code{\link{gamgam}} and
+\code{\link{normnorm}} respectively.
+}
+\examples{
+## Obtain the posterior distribution with binomial-beta model and summary
+## it
+ep1 <- binombeta(alpha = 1, beta = 2, n = 10, r = 3)
+summary(ep1)
 }

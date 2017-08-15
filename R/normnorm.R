@@ -1,39 +1,117 @@
-#'Normal sampling distribution with a normal distribution of prior
+#'Normal sampling distribution
 #'
-#'Define the posterior distribution function for \eqn{f( x | \mu, \sigma )}, with
-#'a normal prior distribution \eqn{g( \mu, \sigma )} and a normal sampling
-#'distribution \eqn{f( \mu, \sigma | x )}.
+#'Define the posterior distribution function for \eqn{\pi ( \mu |x )} if we have
+#'a normal sampling distribution \eqn{f( x | \mu, \sigma^2 )} where \eqn{\mu}
+#'is unknown and \eqn{\sigma^2} is known, and the normal prior distribution
+#'\eqn{\pi ( \mu; m, s )} for unknown \eqn{\mu}. Define the posterior
+#'distirbution \eqn{\pi ( \mu,\tau |x )} if we have a normal sampling
+#'distribution where both \eqn{\mu} and \eqn{\sigma^2} are unknown, and the
+#'normal-gamma prior distribution \eqn{\pi( \mu,\tau; m,s,\alpha,\beta )} for
+#'unknown mean and precison \eqn{\tau} = \eqn{1/\sigma^2}.
 #'
-#'@param x a vector of observations from a normal distribution with mu and
-#'sigma.
-#'@param \eqn{m},\eqn{s} parameters from a normal distribution of mu prior.
-#'@param \eqn{\alpha},\eqn{\beta} parameters from a gamma distribution. If
-#'mu and sigma is NULL, the prior distribution on \eqn{\mu} and precision
-#'\eqn{\tau} has a Normal-Gamma distribution. \eqn{\tau = 1/\sigma^2}
+#'@param x a vector of observations from a normal distribution with mean
+#'mu and variance sigma^2.
+#'@param \eqn{m},\eqn{s} two parameters of the prior normal distribution.
+#'If mu is NULL, they are mean and standard deviation of prior
+#'normal distribution for mu. If both mu and sigma are NULL, they are
+#'mean and standard deviation of normal distribution
+#'\eqn{\pi (\mu | \tau)}.
+#'@param \eqn{\alpha},\eqn{\beta} two parameters of a gamma distribution.
+#'Only used when mu and sigma are both NULL, then the prior distribution
+#'on \eqn{\mu} and precision \eqn{\tau} has a Normal-Gamma distribution.
+#'The distribution of \eqn{\tau} is \eqn{gamma(\tau; \alpha, \beta)}
 #'@param mu the mean of x vector from a normal distribution. If it is NULL,
 #'the mean of x is unknown.
 #'@param sigma the standard deviation of x vector from a normal distribution.
 #'If it is NULL, the standard deviation of x is unknown.
 #'
 #'@return An object of class "\code{g12post}" is returned.
+#'\item{prior}{the prior distribution.} \item{likelihood}{the likelihood
+#' function.} \item{posterior}{the posterior distribution.} \item{mu}{the mean
+#' of the x vector from a normal distribution.} \item{pri.mean}{the mean of the
+#' prior distribution.} \item{pri.std}{the standard deviation of the prior
+#' distribution.} \item{pri.precision}{the
+#' precision of the prior distribution.} \item{pos.mean}{the mean of the
+#' posterior distribution.} \item{pos.std}{the standard deviation of the
+#' posterior distribution.} \item{pos.precision}{the
+#' precision of the posterior distribution.}
+#' \item{model}{the prior and likelihood type to produce the posterior.}
+#'If both both mu and sigma are NULL, the addtional returns will be
+#'\item{tau}{the precision of the x vector from a normal distribution.}
+#'\item{mu.prior}{the prior distribution for mu.} \item{tau.prior}{the
+#'prior distribution for tau.} \item{mu.posterior}{the
+#'posterior distribution for mu.} \item{tau.posterior}{the
+#'posterior distribution for tau.} \item{pos.m}{the parameter m in posteior
+#'normal-gamma distribution.} \item{pos.s}{the parameter s in posteior
+#'normal-gamma distribution.} \item{pos.alpha}{the parameter \eqn{\alpha} in
+#'posteior normal-gamma distribution.} \item{pos.beta}{the parameter
+#'\eqn{\beta} in posteior normal-gamma distribution.}
+#'Notice \code{pri.mean}, \code{pri.std}, \code{pos.mean} and \code{pos.std}
+#'will not return in this situation.
 #'
+#'@details Suppose we have a random sample x from normal distribution
+#'N(\eqn{\mu},\eqn{\sigma^2}) whose \eqn{\mu}
+#'is assumed to be unknow, the likelihood of this is \eqn{f (x | \mu)} and
+#'the conjugate prior for this unknown \eqn{\mu} is a normal
+#'distributin \eqn{\pi (\mu; m, s )}. Then the
+#'posterior distribution \eqn{\pi (\mu | x )}, proportional to
+#'\eqn{f (x | \mu)}\eqn{\pi (\mu; m, s )}, is also a normal distribution
+#'N(\eqn{\mu_n}, \eqn{\sigma_n^2}).
+#'
+#'Suppose we have a random sample x from normal distribution
+#'N(\eqn{\mu},\eqn{\sigma^2}) whose \eqn{\mu} and \eqn{\sigma^2} both are
+#'assumed to be unknow, the likelihood of this is \eqn{f (x | \mu, \sigma^2)}.
+#'The pricision \eqn{\tau} equals 1/\eqn{\sigma^2}, then the conjugate
+#'prior for unknown \eqn{\mu} and \eqn{\tau} is a normal-gamma distribution
+#'where \eqn{NG(\mu, \tau; m, s, \alpha,\beta)= N(\mu | \tau ; m, (s\tau)^-1)
+#'G(\tau; \alpha,\beta)}. The posterior distribution is normal-gamma with
+#'four updated parameters \eqn{m_n, s_n, \alpha_n, \beta_n}. In addtion, the
+#'marginal distribution of \eqn{\mu} is student t distribution.
+#'
+#'@references
+#'Hoff. 2010.Conjugate Priors for Normal Data, PowerPoint presentation,
+#'STA290: Bayesian and Modern Data Analysis, Duke University.
+#'Available from:
+#'\href{https://www2.stat.duke.edu/courses/Fall10/sta290/Lectures/
+#'Normal/normal-conjugate.pdf}{Weblink}.
+#'
+#'Murphy, KP. 2007. Conjugate Bayesian analysis of the Gaussian distribution.
+#'Available from:
+#'\href{https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf}{Weblink}.
+#'
+#'@source The
+#'\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{slides 6}
+#'of STATG012 on Moodle
+#'@seealso \code{\link{summary.g12post}} for summararies of prior
+#'and posterior distribution.
+#'@seealso \code{\link{plot.g12post}} for plots of prior and posterior
+#'distribution.
 #'@examples
-#'
 #' ## this example is from slides6 Example 5.7
 #' ## generate a sample of 9 from a normal distribution with sd=2
 #' x <- rnorm(9, sd = 2)
 #' ## the observed sample mean is 20
 #' xx <- x- mean(x) + 20
 #' ## find the posterior density
-#' normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
+#' exmp1 <- normnorm(xx, m = 25, s = sqrt(10), sigma = 2)
+#' ## summay and plot the example
+#' summary(exmp1)
+#' plot(exmp1, leg_pos = "right", cex = 0.8)
 #'
-#' ##
-#' x <- rnorm(13, mean = 2, sd = 0.5)
-#' a <- normnorm(x, m = 0, s = 1, alpha = 1, beta = 1)
-#'@seealso The
-#'\href{https://moodle.ucl.ac.uk/mod/folder/view.php?id=2570901}{slides}
-#'of STATG012 on Moodle
-#'
+#' ## this example assumes both mu and sigma are unknown
+#' y <- rnorm(13, mean = 2, sd = 0.5)
+#' exmp2 <- normnorm(y, m = 0.5, s = 1, a = 2, b = 2)
+#' summary(exmp2)
+#' ## show the first plot : prior and posterior distribution of mu
+#' plot(exmp2, which = 1, main = "prior and posterior distribution of mu")
+#' ## show the second plot : prior and posterior distribution of tau
+#' plot(exmp2, which = 2, col = 1:2)
+#' ## show the third plot : Prior Contour
+#' plot(exmp2, which = 3, main = "Prior Contour",
+#'            xlim = range(-3:3),ylim = range(0:3) )
+#' ## show the fourth plot : Posterior Contour
+#' plot(exmp2, which = 4, main = "Posterior Contour",
+#'            xlim = range(-3:3), ylim = range(1:5))
 #'@export normnorm
 
 normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
@@ -144,7 +222,7 @@ normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,
   cat(paste("Posterior precision      : ",round(pos.precision,4),"\n",sep=""))
   cat(paste("Posterior mean           : ",round(pos.mean,4),"\n",sep=""))
   cat(paste("Posterior variance       : ",round(pos.var,4),"\n",sep=""))
-  cat(paste("Posterior std. deviation : ",round(pos.sd,4),"\n",sep=""))
+  cat(paste("Posterior std. deviation : ",round(pos.std,4),"\n",sep=""))
 
   class(res) <- "g12post"
   invisible(res)

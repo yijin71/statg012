@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yi Jin" />
 
-<meta name="date" content="2017-08-04" />
+<meta name="date" content="2017-08-15" />
 
 <title>Introduction of statg012 Package</title>
 
@@ -70,19 +70,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction of statg012 Package</h1>
 <h4 class="author"><em>Yi Jin</em></h4>
-<h4 class="date"><em>2017-08-04</em></h4>
+<h4 class="date"><em>2017-08-15</em></h4>
 
 
 
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-<ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
-</ul>
-<div id="vignette-info" class="section level2">
-<h2>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
+<p>The package <strong>statg012</strong> focuses on conjugate priors and hypothesis testing of the Bayesian Inference, which is suitable for students studing STATG012 course at University College London. Conjugate prior families were first introduced and discussed by Raiffa and Schlaifer (1961). They showed that the that the posterior distribution resulting from the conjugate prior is itself a member of the same family as the conjugate prior (Raiffa &amp; Schlaifer 1961). When the prior and posterior distribution are from the same family, the formulas for updating the prior into the posterior will become relatively simple. Due to this property, Fink (1997) demonstrated that the conjugate prior families are attractive that go beyond analytical tractability. Maria De Iorio (2017) introduced that Bayesian hypothesis testing is built on the posterior distribution, and the decision is to not reject or reject the null hypothesis according to whichever decision minimises the expected posterior loss. The objective of this package is to help students study the course, and understand the conjugate priors and Bayesian hypothesis testing more clearly. Students can utilize the package to check answers of examples in slides and see corresponding plots. The probability distributions from the exponential family all have conjugate prior families (Robert 2007). The STATG012 course mentioned six distributions of them, hence, there are 5 functions about conjugate priors with different models. Moreover, 1 function to summaries statistics of these distinctive models, and 1 function to show plots of prior and posterior distributions. The last one is about hypothesis testing of the Bayesian Inference. Notice that the purpose of this vignette is only to show that how to use the functions in this package with some examples.</p>
+<div id="functions-for-conjugate-priors" class="section level2">
+<h2>Functions for Conjugate priors</h2>
+<p>As we mentioned, there are six examples about conjugate prior families introduced in STATG012 slides: the binomial sampling distribution with a beta distribution of prior, the negative binomial sampling distribution with a beta distribution of prior, the Poisson sampling distribution with a gamma distribution of prior, the exponential sampling distribution with a gamma distribution of prior, the gamma sampling distribution with a gamma distribution of prior and the normal sampling distribution with a normal distribution of prior. We will explain these six models by five functions in the package.</p>
+<p>The <code>binombeta()</code> defines the posterior distribution function for π ( θ | r ), with a beta prior distribution π ( θ; α, β ) and a binomial sampling distribution p ( r | θ ), where r are number of successes in n trials. The function will return the prior and posetrior distributions, the likelihood function, the range of theta, the model name, and the parameters of beta distribution for posterior <code>pos.alpha</code>, <code>pos.beta</code> which can be compared with parameters of the beta prior distribution.</p>
+<p>The <code>nbinombeta()</code> focues on the posterior distribution function for π ( θ | k ), with a beta prior distribution π ( θ; α, β ) and a negative binomial sampling distribution p ( k | θ ), where k is the number of failures in <span class="math inline">\(r\)</span>th successes. It will return the same values from <code>binombeta()</code> function.</p>
+<p>The <code>poisgamma()</code> defines the posterior distribution function for π ( μ | x ), with a gamma prior distribution π ( μ; α, λ ) and a poisson sampling distribution f (x | μ), where μ is the average rate of the sample data x from Poisson distribution. It will return the prior and posetrior distributions, the likelihood function, the range of μ, the model name, and the parameters of gamma distribution for posterior <code>pos.shape</code>, <code>pos.rate</code>. Then we can compare parameters between prior distribution and posterior distribution.</p>
+<p>The <code>gamgam()</code> focueses on the posterior distribution function for π ( θ | t ), with a gamma prior distribution π ( θ; α, β ) and a gamma sampling distribution t with known shape parameter a and unknown rate parameter θ. The return of this function will be the prior and posetrior distributions, the likelihood function, the unknown parameter θ, the model name, and the parameters of gamma distribution for posterior <code>pos.shape</code>, <code>pos.rate</code>. When a equals 1, it will become a special case that a random sample from the exponential distribution has a gamma prior distribution.</p>
+<p>The <code>normnorm()</code> defines the posterior distribution function for π ( μ | x ) if we have a normal sampling distribution f( x | μ, σ^2 ) where μ is unknown and σ^2 is known, and the normal prior distribution π ( μ; m, s ) for unknown μ. It will return the the prior and posetrior distributions, the likelihood function, the unknown μ, the model name, and the mean, standard deviation and precision of the posterior normal distribution. If we have a normal sampling distribution where both μ and σ^2 are unknown, and the normal-gamma prior distribution π( μ, τ; m, s, α, β ) for unknown mean and precison τ = 1/σ^2, then we can define the posterior distirbution π ( μ, τ | x ). Except the prior, likelihood and posterior, this return will include the prior and posterior distribution for μ, the prior and posterior distribution for τ, the parameters ofposteior normal-gamma distribution.</p>
+<p>The <code>summary()</code> is a generic function used to produce result summaries of the results of above six various models. It will return a list of summary statistics such as mean, variance and quantiles of prior and posterior distribution repectively.</p>
+<p>The <code>plot()</code> #’ model fitthing functions</p>
 </div>
 <div id="styles" class="section level2">
 <h2>Styles</h2>

@@ -42,3 +42,6 @@ library(statg012)
 ```
 
 ### Vignette
+See the vignette `statg012-vignette` in `User guides, package vignettes and other documentation' for an overview of the package.
+
+

@@ -3,8 +3,7 @@ title: "Statg012 Package Vignette"
 author: "YI JIN"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_vignette:
-    toc: true
+       pdf_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}

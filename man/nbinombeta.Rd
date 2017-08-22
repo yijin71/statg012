@@ -21,7 +21,7 @@ nbinombeta(alpha = 1, beta = 1, k, r, theta = seq(0, 1, 0.001))
 
 \item{r}{the rth successes.}
 
-\item{\eqn{\theta}}{the range of the probability of success.}
+\item{theta}{the range of the probability of success.}
 }
 \value{
 An object of class "\code{g12post}" is returned.

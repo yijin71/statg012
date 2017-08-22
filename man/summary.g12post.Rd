@@ -4,10 +4,10 @@
 \alias{summary.g12post}
 \title{Object Summaries}
 \usage{
-\method{summary}{g12post}(objects, ...)
+\method{summary}{g12post}(object, ...)
 }
 \arguments{
-\item{objects}{an object for which a summary is desired.}
+\item{object}{an object for which a summary is desired.}
 
 \item{...}{additional arguments affecting the summary produced.}
 }

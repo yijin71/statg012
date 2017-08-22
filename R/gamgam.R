@@ -33,8 +33,7 @@
 #' slides 5} Example 5.4 from Moodle at UCL.
 #'@references
 #'Fink, D. 1997. A Compendium of Conjugate Priors.
-#'\href{https://www.researchgate.net/
-#'publication/238622435_A_Compendium_of_Conjugate_Priors}{Weblink}.
+#'\href{https://www.researchgate.net/publication/238622435_A_Compendium_of_Conjugate_Priors}{Weblink}.
 #'@seealso \code{\link{summary.g12post}} for summararies of prior
 #'and posterior distribution.
 #'@seealso \code{\link{plot.g12post}} for plots of prior and posterior

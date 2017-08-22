@@ -6,7 +6,7 @@
 #' \code{\link{nbinombeta}}, \code{\link{poisgamma}}, \code{\link{gamgam}} and
 #' \code{\link{normnorm}} respectively.
 #'
-#' @param objects an object for which a summary is desired.
+#' @param object an object for which a summary is desired.
 #' @param ... additional arguments affecting the summary produced.
 #' @return the function \code{summary.g12post} returns a list of summary
 #' statistics such as mean, variance and quantiles of prior and posterior
@@ -17,10 +17,10 @@
 #' ep1 <- binombeta(alpha = 1, beta = 2, n = 10, r = 3)
 #' summary(ep1)
 #' @export
-summary.g12post <- function(objects, ...) {
+summary.g12post <- function(object, ...) {
 
-  if(objects$model == "binombeta") {
-  res <- objects
+  if(object$model == "binombeta") {
+  res <- object
   ##statistics of prior function
   pri.alpha <- res$pri.alpha
   pri.beta <- res$pri.beta
@@ -64,16 +64,16 @@ summary.g12post <- function(objects, ...) {
                    prior.variance = pri.var,
                    prior.std.deviation = pri.std,
                    prior.quantiles = pri.qtl,
-                   posteror.mean = pos.mean,
-                   posteror.variance = pos.var,
-                   posteror.std.deviation = pos.std,
-                   posteror.quantiles = pos.qtl)
+                   posterior.mean = pos.mean,
+                   posterior.variance = pos.var,
+                   posterior.std.deviation = pos.std,
+                   posterior.quantiles = pos.qtl)
   class(results) <- "g12post"
   invisible(results)
   }
 
-  if(objects$model == "nbinombeta") {
-    res <- objects
+  if(object$model == "nbinombeta") {
+    res <- object
     ##statistics of prior function
     pri.alpha <- res$pri.alpha
     pri.beta <- res$pri.beta
@@ -117,16 +117,16 @@ summary.g12post <- function(objects, ...) {
                      prior.variance = pri.var,
                      prior.std.deviation = pri.std,
                      prior.quantiles = pri.qtl,
-                     posteror.mean = pos.mean,
-                     posteror.variance = pos.var,
-                     posteror.std.deviation = pos.std,
-                     posteror.quantiles = pos.qtl)
+                     posterior.mean = pos.mean,
+                     posterior.variance = pos.var,
+                     posterior.std.deviation = pos.std,
+                     posterior.quantiles = pos.qtl)
     class(results) <- "g12post"
     invisible(results)
   }
 
-  if (objects$model == "poisgamma") {
-    res <- objects
+  if (object$model == "poisgamma") {
+    res <- object
     pri.s <- res$pri.shape
     pri.r <- res$pri.rate
     pri.mean <- pri.s / pri.r
@@ -165,10 +165,10 @@ summary.g12post <- function(objects, ...) {
                      prior.variance = pri.var,
                      prior.std.deviation = pri.std,
                      prior.quantiles = pri.qtl,
-                     posteror.mean = pos.mean,
-                     posteror.variance = pos.var,
-                     posteror.std.deviation = pos.std,
-                     posteror.quantiles = pos.qtl)
+                     posterior.mean = pos.mean,
+                     posterior.variance = pos.var,
+                     posterior.std.deviation = pos.std,
+                     posterior.quantiles = pos.qtl)
     class(results) <- "g12post"
     invisible(results)
 
@@ -176,8 +176,8 @@ summary.g12post <- function(objects, ...) {
 
 
 
-  if (objects$model == "gamgam"){
-    res <- objects
+  if (object$model == "gamgam"){
+    res <- object
     pri.s <- res$pri.shape
     pri.r <- res$pri.rate
     pri.mean <- pri.s / pri.r
@@ -216,16 +216,16 @@ summary.g12post <- function(objects, ...) {
                      prior.variance = pri.var,
                      prior.std.deviation = pri.std,
                      prior.quantiles = pri.qtl,
-                     posteror.mean = pos.mean,
-                     posteror.variance = pos.var,
-                     posteror.std.deviation = pos.std,
-                     posteror.quantiles = pos.qtl)
+                     posterior.mean = pos.mean,
+                     posterior.variance = pos.var,
+                     posterior.std.deviation = pos.std,
+                     posterior.quantiles = pos.qtl)
     class(results) <- "g12post"
     invisible(results)
   }
 
-  if (objects$model == "normnorm"){
-    res <- objects
+  if (object$model == "normnorm"){
+    res <- object
     if (length(res) > 11) {
       pos.m <- res$pos.m
       pos.s <- res$pos.s
@@ -239,17 +239,17 @@ summary.g12post <- function(objects, ...) {
       tau.var <- pos.alpha / (pos.beta^2)
       tau.std <- sqrt(tau.var)
 
-      cat(paste("X Mean              : ",round(x.mean, 4), "\n"))
-      cat(paste("X Variance          : ",round(x.var, 4), "\n"))
-      cat(paste("X Std. Deviation    : ",round(x.std, 4), "\n"))
+      cat(paste("Mu Mean              : ",round(x.mean, 4), "\n"))
+      cat(paste("Mu Variance          : ",round(x.var, 4), "\n"))
+      cat(paste("Mu Std. Deviation    : ",round(x.std, 4), "\n"))
       cat("\n")
       cat(paste("Tau Mean      : ",round(tau.mean, 4), "\n"))
       cat(paste("Tau Variance  : ",round(tau.var, 4), "\n"))
       cat(paste("Tau Deviation : ",round(tau.std, 4), "\n"))
 
-       results <- list (x.mean = x.mean,
-                        x.variance = x.var,
-                        x.std.deviation = x.std,
+       results <- list (mu.mean = x.mean,
+                        mu.variance = x.var,
+                        mu.std.deviation = x.std,
                         tau.mean = tau.mean,
                         tau.variance = tau.var,
                         tau.std.deviation = tau.std
@@ -297,10 +297,10 @@ summary.g12post <- function(objects, ...) {
                        prior.std.deviation = pri.std,
                        prior.quantiles = pri.qtl,
                        pos.precision = pos.precision,
-                       posteror.mean = pos.mean,
-                       posteror.variance = pos.var,
-                       posteror.std.deviation = pos.std,
-                       posteror.quantiles = pos.qtl)
+                       posterior.mean = pos.mean,
+                       posterior.variance = pos.var,
+                       posterior.std.deviation = pos.std,
+                       posterior.quantiles = pos.qtl)
       class(results) <- "g12post"
       invisible(results)
 

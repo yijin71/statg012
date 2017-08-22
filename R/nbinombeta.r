@@ -8,7 +8,7 @@
 #'@param r the rth successes.
 #'@param alpha the parameter for the beta distribution ( \eqn{\ge 0} ).
 #'@param beta the parameter for the beta distribution ( \eqn{\ge 0} ).
-#'@param \eqn{\theta} the range of the probability of success.
+#'@param theta the range of the probability of success.
 #'@return An object of class "\code{g12post}" is returned.
 #'\item{prior}{the prior distribution, i.e.
 #' the \eqn{beta(\alpha,\beta)} distribution.} \item{likelihood}{the likelihood

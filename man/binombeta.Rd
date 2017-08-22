@@ -25,7 +25,7 @@ binombeta(alpha = 1, beta = 1, n, r, theta = seq(0, 1, 0.001))
 
 \item{r}{the number of successes in n trials.}
 
-\item{\eqn{\theta}}{the range of the probability of success.}
+\item{theta}{the range of the probability of success.}
 }
 \value{
 An object of class "\code{g12post}" is returned.
@@ -53,7 +53,7 @@ sampling distribution \eqn{p ( r | \theta )}.
 ## (uniform beta(1,1)) prior, then the posterior distribution
 ## has exactly the same shape as the likelihood function.
 a <- binombeta(n = 6, r = 2)
-summay(a)
+summary(a)
 
 ## example 3.6 : 3 successes in 10 trials and a beta(4,6) prior.
 ex <- binombeta(4, 6, 10, 3)

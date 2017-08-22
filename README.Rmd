@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# statg012 <img src="standalone.png" align="right" />
+# statg012 <img src="tools/standalone.png" align="right" />
 
 ## Statistical Inference
 

@@ -8,7 +8,7 @@ Authors@R: c(
     person("Paul", "Northrop", email = "p.northrop@ucl.ac.uk",
     role = c("aut", "cre")))
 Description: Package statg012 introduces some distributions
-    of bayesian inference, which is suitable for students of statg012
+    of Bayesian inference, which is suitable for students of statg012
     from UCL.
 License: GPL (>= 2)
 LazyData: TRUE
@@ -16,11 +16,11 @@ Depends:
     R (>= 3.3.3),
 RoxygenNote: 6.0.1
 Imports:
-    knitr,
     devtools,
     roxygen2,
     stats,
-    graphics
+    graphics,
+    methods
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

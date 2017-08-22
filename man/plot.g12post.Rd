@@ -5,8 +5,8 @@
 \title{Generic Plotting of Prior and Posterior distribution.}
 \usage{
 \method{plot}{g12post}(x, y, leg_pos = c("topright", "bottomright", "bottom",
-  "bottomleft", "left", "topleft", "top", "right", "center"), which = c(1:4),
-  ...)
+  "bottomleft", "left", "topleft", "top", "right", "center"), which = c(1:5),
+  prob = c(25, 50, 75, 95), ...)
 }
 \arguments{
 \item{x, y}{vectors or matrices of data for plotting. The number of row should
@@ -18,6 +18,8 @@ match. If one of them are missing, the other is taken as y and an x vector of
 \item{which}{if matrices are from \code{\link{normnorm}}, a subset of the plots
 is required, specify a subset of the numbers 1:6. See below 'Details' for the
 different kinds.}
+
+\item{prob}{the probability level.}
 
 \item{...}{other arguments from \code{\link{matplot}}, \code{\link{legend}}
 and \code{\link{contour}} to plotting functions.}
@@ -31,19 +33,23 @@ come from different functions, including \code{\link{binombeta}},
 \details{
 The 1 plot shows the prior and posterior distribution of mu.
 The 2 plot shows the prior and posterior distribution of tau.
-The 3 plot shows the prior contour.
-The 4 plot shows the posterior contour.
+The 3 plot shows the prior contour with probabilites.
+The 4 plot shows the posterior contour with probabilites.
+The 5 plot shows the prior and posterior contours with probabilites together.
 }
 \examples{
 ## Get the posterior distribution with Gamma-Gamma model and plot.
 y <- rgamma(10, shape = 3)
 ex <- gamgam(y, a = 3, 4, 1)
 plot(ex, leg_pos = "center" , box.lty=0)
+
 ## Obtain the posterior distribution with Normal-Gamma model,
 ## assuming both mu and sigma are unknown.
-x <- rnorm(15, mean = 1, sd = 0.5)
+x <- rnorm(100, mean = 1, sd = 0.5)
 ex <- normnorm(y, m = 2, s = 1, a = 1, b = 2)
-## show the fourth plot
+## show the fourth and fifth plot
 plot(ex, which = 4, main = "Posterior Contour",
-           xlim = range(-3:3), ylim = range(0:3))
+           xlim = c(-3,3), ylim = c(0,3))
+plot(ex, which = 5, main = "Prior and Posterior Contour")
+
 }

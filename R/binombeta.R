@@ -8,7 +8,7 @@
 #'@param r the number of successes in n trials.
 #'@param alpha the parameter for the beta distribution ( \eqn{\ge 0} ).
 #'@param beta the parameter for the beta distribution ( \eqn{\ge 0} ).
-#'@param \eqn{\theta} the range of the probability of success.
+#'@param theta the range of the probability of success.
 #'@return An object of class "\code{g12post}" is returned.
 #'\item{prior}{the prior distribution, i.e.
 #' the \eqn{beta(\alpha,\beta)} distribution.} \item{likelihood}{the likelihood
@@ -43,7 +43,7 @@
 #'## (uniform beta(1,1)) prior, then the posterior distribution
 #'## has exactly the same shape as the likelihood function.
 #'a <- binombeta(n = 6, r = 2)
-#'summay(a)
+#'summary(a)
 #'
 #'## example 3.6 : 3 successes in 10 trials and a beta(4,6) prior.
 #'ex <- binombeta(4, 6, 10, 3)
@@ -89,9 +89,10 @@
                pos.alpha = pos.alpha,
                pos.beta = pos.beta,
                model = model)
-
-  cat(paste("posterior alpha : ",round(pos.alpha, 5), "\n"))
-  cat(paste("posterior beta  : ",round(pos.beta, 5), "\n"))
+  cat(paste("Prior Alpha : ",round(alpha, 5), "\n"))
+  cat(paste("Prior Beta  : ",round(beta, 5), "\n"))
+  cat(paste("Posterior alpha : ",round(pos.alpha, 5), "\n"))
+  cat(paste("Posterior beta  : ",round(pos.beta, 5), "\n"))
 
   class(res) <- "g12post"
   invisible(res)

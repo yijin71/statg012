@@ -15,22 +15,22 @@ normnorm(x, m, s, alpha = NULL, beta = NULL, mu = NULL, sigma = NULL)
 \item{x}{a vector of observations from a normal distribution with mean
 mu and variance sigma^2.}
 
-\item{mu}{the mean of x vector from a normal distribution. If it is NULL,
-the mean of x is unknown.}
-
-\item{sigma}{the standard deviation of x vector from a normal distribution.
-If it is NULL, the standard deviation of x is unknown.}
-
-\item{\eqn{m}, \eqn{s}}{two parameters of the prior normal distribution.
+\item{m, s}{two parameters of the prior normal distribution.
 If mu is NULL, they are mean and standard deviation of prior
 normal distribution for mu. If both mu and sigma are NULL, they are
 mean and standard deviation of normal distribution
 \eqn{\pi (\mu | \tau)}.}
 
-\item{\eqn{\alpha}, \eqn{\beta}}{two parameters of a gamma distribution.
+\item{alpha, beta}{two parameters of a gamma distribution.
 Only used when mu and sigma are both NULL, then the prior distribution
 on \eqn{\mu} and precision \eqn{\tau} has a Normal-Gamma distribution.
 The distribution of \eqn{\tau} is \eqn{gamma(\tau; \alpha, \beta)}}
+
+\item{mu}{the mean of x vector from a normal distribution. If it is NULL,
+the mean of x is unknown.}
+
+\item{sigma}{the standard deviation of x vector from a normal distribution.
+If it is NULL, the standard deviation of x is unknown.}
 }
 \value{
 An object of class "\code{g12post}" is returned.
@@ -100,26 +100,28 @@ summary(exmp1)
 plot(exmp1, leg_pos = "right", cex = 0.8)
 
 ## this example assumes both mu and sigma are unknown
-y <- rnorm(13, mean = 2, sd = 0.5)
-exmp2 <- normnorm(y, m = 0.5, s = 1, a = 2, b = 2)
+y <- rnorm(9)
+exmp2 <- normnorm(y, m = 1, s = 2, a = 1, b = 1)
 summary(exmp2)
-## show the first plot : prior and posterior distribution of mu
-plot(exmp2, which = 1, main = "prior and posterior distribution of mu")
-## show the second plot : prior and posterior distribution of tau
+## show the first plot : Prior and Posterior Distribution of mu
+plot(exmp2, which = 1, main = "Prior and Posterior Distribution of mu")
+## show the second plot : Prior and Posterior Distribution of tau
 plot(exmp2, which = 2, col = 1:2)
 ## show the third plot : Prior Contour
 plot(exmp2, which = 3, main = "Prior Contour",
-           xlim = range(-3:3),ylim = range(0:3) )
+           xlim = c(-3,3),ylim = c(0,3) )
 ## show the fourth plot : Posterior Contour
 plot(exmp2, which = 4, main = "Posterior Contour",
-           xlim = range(-3:3), ylim = range(1:5))
+           xlim = c(-3,3), ylim = c(1,5))
+## show the fifth plot : Prior and Posterior Contour
+plot(exmp2, which = 5, main = "Prior and Posterior Contour",
+           xlim = c(-3,3), ylim = c(1,5))
 }
 \references{
 Hoff. 2010.Conjugate Priors for Normal Data, PowerPoint presentation,
 STA290: Bayesian and Modern Data Analysis, Duke University.
 Available from:
-\href{https://www2.stat.duke.edu/courses/Fall10/sta290/Lectures/
-Normal/normal-conjugate.pdf}{Weblink}.
+\href{https://www2.stat.duke.edu/courses/Fall10/sta290/Lectures/Normal/normal-conjugate.pdf}{Weblink}.
 
 Murphy, KP. 2007. Conjugate Bayesian analysis of the Gaussian distribution.
 Available from:

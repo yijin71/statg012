@@ -116,7 +116,7 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
                      ...)
   }
 
-  my_legend4 <- function(pos, lty = 1:2, lwd = 1, col = 1,
+  my_legend4 <- function(pos, lty = 1, lwd = 1, col = 1,
                          legend = c("Contour"), ..., xlab, ylab,
                          lend, xlim, ylim, add, verbose, type,nlevels, levels,
                          labels, labcex, drawlabels,
@@ -124,15 +124,34 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
     graphics::legend(pos, lty = lty, lwd = lwd, col = col, legend = legend,
                      ...)
   }
+  my_legend5 <- function(pos, lty = 1:2, lwd = 1, col = 1,
+                         legend = c("Posterior Contour","Prior Contour"), ..., xlab, ylab,
+                         lend, xlim, ylim, add, verbose, type,nlevels, levels,
+                         labels, labcex, drawlabels,
+                         method, vfont, frame.plot, zlim, main) {
+    graphics::legend(pos, lty = lty, lwd = lwd, col = col, legend = legend,
+                     ...)
+  }
 
-  contour <- function(x,y,z, xlab = "mu", ylab="tau",
-                      main = "",..., legend, fill,
-                      border, angle, density, box.lwd, box.lty, box.col,
-                      pt.bg, pt.cex, pt.lwd, xjust, yjust, x.intersp,
-                      y.intersp, adj, text.width, text.col, text.font,
-                      merge, trace, ncol, horiz, inset, title.col,
-                      title.adj, seg.len,lend, verbose, type){
-    graphics::contour(x, y, z, xlab = xlab, ylab = ylab, main = main,
+
+  contour1 <- function(x,y,z, xlab = "mu", ylab="tau",
+                       main = "", lty = 1, ..., legend, fill,
+                       border, angle, density, box.lwd, box.lty, box.col,
+                       pt.bg, pt.cex, pt.lwd, xjust, yjust, x.intersp,
+                       y.intersp, adj, text.width, text.col, text.font,
+                       merge, trace, ncol, horiz, inset, title.col,
+                       title.adj, seg.len,lend, verbose, type){
+    graphics::contour(x, y, z, xlab = xlab, ylab = ylab, main = main,lty = lty,
+                      ...)
+  }
+  contour2 <- function(x,y,z, xlab = "mu", ylab="tau",
+                       main = "", lty = 2, ..., legend, fill,
+                       border, angle, density, box.lwd, box.lty, box.col,
+                       pt.bg, pt.cex, pt.lwd, xjust, yjust, x.intersp,
+                       y.intersp, adj, text.width, text.col, text.font,
+                       merge, trace, ncol, horiz, inset, title.col,
+                       title.adj, seg.len,lend, verbose, type){
+    graphics::contour(x, y, z, xlab = xlab, ylab = ylab, main = main,lty = lty,
                       ...)
   }
   if ( model == "binombeta") {
@@ -199,7 +218,9 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
       }
 
       if (which == 3) {
-        contour(mu, tau, outer(mu.prior,tau.prior),...)
+        zz <- outer(mu.prior, tau.prior)
+        con_levs <- find_prob_contour_levels(mu, tau, zz, prob = prob / 100)
+        contour(mu, tau, zz, levels = con_levs, labels = prob, ...)
         my_legend4(leg_pos, ...)
 
       }
@@ -215,12 +236,12 @@ plot.g12post <- function(x, y, leg_pos = c("topright", "bottomright",
       if (which == 5) {
         zz_pos <- outer(mu.pos, tau.pos)
         con_levs_pos <- find_prob_contour_levels(mu, tau, zz_pos, prob = prob / 100)
-        contour(mu, tau, zz_pos, levels = con_levs_pos, labels = prob, ...)
+        contour1(mu, tau, zz_pos, levels = con_levs_pos, labels = prob, ...)
         zz_prior <- outer(mu.prior, tau.prior)
         con_levs_prior <- find_prob_contour_levels(mu, tau, zz_prior, prob = prob / 100)
-        contour(mu, tau, zz_prior, levels = con_levs_prior, labels = prob, add = TRUE, ...)
+        contour2(mu, tau, zz_prior, levels = con_levs_prior, labels = prob, add = TRUE, ...)
         #        contour(mu,tau,outer(mu.pos, tau.pos),...)
-        my_legend4(leg_pos, ...)
+        my_legend5(leg_pos, ...)
       }
 
     } else {

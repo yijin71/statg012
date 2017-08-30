@@ -107,13 +107,13 @@
 #' plot(exmp2, which = 2, col = 1:2)
 #' ## show the third plot : Prior Contour
 #' plot(exmp2, which = 3, main = "Prior Contour",
-#'            xlim = c(-3,3),ylim = c(0,3) )
+#'            xlim = c(-1,3),ylim = c(0,5) )
 #' ## show the fourth plot : Posterior Contour
 #' plot(exmp2, which = 4, main = "Posterior Contour",
-#'            xlim = c(-3,3), ylim = c(1,5))
+#'            xlim = c(-3,3), ylim = c(0,5))
 #' ## show the fifth plot : Prior and Posterior Contour
 #' plot(exmp2, which = 5, main = "Prior and Posterior Contour",
-#'            xlim = c(-3,3), ylim = c(1,5))
+#'            xlim = c(-3,3), ylim = c(0,5))
 #'@export normnorm
 
 normnorm <- function (x, m, s, alpha = NULL, beta = NULL, mu = NULL,

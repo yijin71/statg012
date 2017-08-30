@@ -22,5 +22,6 @@ Imports:
     graphics,
     methods
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

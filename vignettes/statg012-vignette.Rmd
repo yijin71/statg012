@@ -17,13 +17,13 @@ options(width = 999)
 ```{r, include = FALSE}
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
-The package `statg012` focuses on conjugate priors and hypothesis testing of the Bayesian Inference, which is suitable for students studying STATG012 course at University College London. Conjugate prior families were first introduced and discussed by Raiffa and Schlaifer (1961). They showed that the posterior distribution, resulting from the conjugate prior, is itself a member of the same family as the conjugate prior (Raiffa \& Schlaifer 1961). When the prior and posterior distribution are from the same family, the formulas for updating the prior into the posterior will become relatively simple. Due to this property, Fink (1997) demonstrated that the conjugate prior families are attractive for reasons that go beyond analytical tractability. Moreover, the probability distributions from the exponential family all have conjugate prior families (Robert 2007). In the STATG012 course, it is pointed out that Bayesian hypothesis testing is built on the posterior distribution, and the decision is to not reject or reject the null hypothesis according to whichever decision minimises the expected posterior loss. 
+The package `statg012` focuses on conjugate priors and hypothesis testing of Bayesian Inference, which is suitable for students studying STATG012 course at University College London. Conjugate prior families were first introduced and discussed by Raiffa and Schlaifer (1961). They showed that the posterior distribution, resulting from the conjugate prior, is itself a member of the same family as the conjugate prior (Raiffa \& Schlaifer 1961). When the prior distribution and posterior distribution are from the same family, the formulas for updating the prior into the posterior will become relatively simple. Due to this property, Fink (1997) demonstrated that the conjugate prior families are attractive for reasons that go beyond analytical tractability. Moreover, the probability distributions from the exponential family all have conjugate prior families (Robert 2007). In STATG012 course, it is pointed out that Bayesian hypothesis testing is built on the posterior distribution, and the decision is to not reject or reject the null hypothesis according to whichever decision minimises the expected posterior loss. 
 
-The objective of this package is to help students study the course, and understand the conjugate priors and Bayesian hypothesis testing more clearly. Students can utilize the package to check answers of examples in slides, plot prior and posterior distributions and perform Bayesian hypothesis testing. The purpose of this vignette is only to show that how to use the functions in this package with some examples. For more details about the arguments required by each function, please refer to the help files or STATG012 notes.
+The objective of this package is to help students study the course, and understand the conjugate priors and Bayesian hypothesis testing more clearly. Students can utilize the package to check answers to examples in slides, plot prior and posterior distributions and perform the Bayesian hypothesis testing. The purpose of this vignette is only to show that how to use the functions in this package with some examples. For more details about the arguments required by each function, please refer to the help files or STATG012 notes.
 
 ## Functions for Conjugate Priors
 
-There are 6 sampling distributions listed with corresponding cojugate priors in the following Table. Based on these models, we create five related functions, which will be explained simply below.
+There are 6 sampling distributions listed with corresponding conjugate priors in the following Table. Based on these models, we create five related functions, which will be explained simply below.
 
 | Sampling Distribution   | Conjugate Prior | 
 | :------------ | :-----------: |
@@ -38,18 +38,17 @@ The function `binombeta()` defines the posterior distribution function for $\pi 
 
 The function `nbinombeta()` focuses on the posterior distribution function for $\pi ( \theta \mid k )$, with a beta prior distribution $\pi ( \theta; \alpha, \beta )$ and a negative binomial sampling distribution $p ( k \mid \theta )$, where $k$ is the number of failures in $r$th successes. It will return the same values as `binombeta()` function.
 
-The function `poisgamma()` defines the posterior distribution function for $\pi( \mu \mid x )$, with a gamma prior distribution $\pi(mu; \alpha, \lambda )$ and a poisson sampling distribution $f(x \mid \mu)$, where $\mu$ is the average rate of the sample data $x$ from Poisson distribution. It will return the prior and posterior distributions, the likelihood function, the range of $\mu$, the model name, and the parameters of gamma distribution for posterior `pos.shape`, `pos.rate`. Then we can compare parameters between prior distribution and posterior distribution.
+The function `poisgamma()` defines the posterior distribution function for $\pi( \mu \mid x )$, with a gamma prior distribution $\pi(\mu; \alpha, \lambda )$ and a poisson sampling distribution $f(x \mid \mu)$, where $\mu$ is the average rate of the sample data $x$ from Poisson distribution. It will return the prior and posterior distributions, the likelihood function, the range of $\mu$, the model name, and the parameters of gamma distribution for posterior `pos.shape`, `pos.rate`. Then we can compare parameters between prior distribution and posterior distribution.
 
-The function `gamgam()` focuses on the posterior distribution function for $\pi(\theta \mid t )$, with a gamma prior distribution $\pi( \theta; \alpha, \beta)$ and a gamma sampling distribution t with known shape parameter a and unknown rate parameter $\theta$. The return of this function will be the prior and posterior distributions, the likelihood function, the unknown parameter $\theta$, the model name, and the parameters of gamma distribution for posterior `pos.shape`, `pos.rate`. When a equals 1, it will become a special case that a random sample from the exponential distribution has a gamma prior distribution.
+The function `gamgam()` focuses on the posterior distribution function for $\pi(\theta \mid t )$, with a gamma prior distribution $\pi( \theta; \alpha, \beta)$ and a gamma sampling distribution $t$ with known shape parameter a and unknown rate parameter $\theta$. The return of this function will be the prior and posterior distributions, the likelihood function, the unknown parameter $\theta$, the model name, and the parameters of gamma distribution for posterior `pos.shape`, `pos.rate`. When a equals 1, it will become a special case that a random sample from the exponential distribution has a gamma prior distribution.
 
-The function `normnorm()` defines the posterior distribution function for $\pi (\mu \mid x )$ if we have a normal sampling distribution $f ( x \mid \mu, \sigma^{2} )$ where $\mu$ is unknown and $\sigma^{2}$ is known, and the normal prior distribution $\pi ( \mu; m, s )$ for unknown $\mu$. It will return the the prior and posterior distributions, the likelihood function,
-the unknown $\mu$, the model name, and the mean, standard deviation and precision of the posterior normal distribution. If we have a normal sampling distribution where both $\mu$ and $\sigma^{2}$ are unknown, and the normal-gamma prior distribution $\pi( \mu, \tau; m, s, \alpha, \beta )$ for unknown mean and precision $\tau = 1/\sigma^{2}$, then we can define the posterior distribution $\pi(\mu,\tau \mid x )$. Except the prior, likelihood and posterior, this return will include the prior and posterior distribution for $\mu$, the prior and posterior distribution for $\tau$, the parameters of posterior normal-gamma distribution.
+The function `normnorm()` defines the posterior distribution function for $\pi (\mu \mid x )$ if we have a normal sampling distribution $f ( x \mid \mu, \sigma^{2} )$ where $\mu$ is unknown and $\sigma^{2}$ is known, and the normal prior distribution $\pi ( \mu; m, s )$ for unknown $\mu$. It will return the the prior and posterior distributions, the likelihood function, the unknown $\mu$, the model name, and the mean, standard deviation and precision of the posterior normal distribution. If we have a normal sampling distribution where both $\mu$ and $\sigma^{2}$ are unknown, and the normal-gamma prior distribution $\pi( \mu, \tau; m, s, \alpha, \beta )$ for unknown mean and precision $\tau = 1/\sigma^{2}$, then we can define the posterior distribution $\pi(\mu,\tau \mid x )$. Except the prior, likelihood and posterior, this return will include the prior and posterior distribution for $\mu$, the prior and posterior distribution for $\tau$, the parameters of posterior normal-gamma distribution.
 
 The function `summary()` is a generic function used to produce summaries of the results of above six various models. It will return a list of summary statistics such as mean, variance and quantiles of prior and posterior distribution respectively. 
 
-The function `plot()` is a function to generate plotting of prior and posterior distributions of above six models. 
+The function `plot()` is a function to generate plotting of prior distributions and posterior distributions of above six models. 
 
-We will introduce how to use function `binombeta()` and function `normnorm()` individually, accompanied by function `summary()` and function `plot()` in the following parts.
+We will introduce how to use function `binombeta()` and function `normnorm()` individually, accompanied by function `summary()` and function `plot()` in the following parts. The other functions to plot posterior distributions function in a similar way. 
 
 ###  Using `binombeta()`
 Suppose that $X$ is a binomial distribution with parameters 10, the number of Bernoulli trials, and $\theta$, an unknown probability of success, that is, $X \sim Bin(10, \theta)$.
@@ -69,17 +68,16 @@ Using function `summary()` to show summarized statistics of prior and posterior 
 summary(ex)
 ```
 
-It can be recognized that the posterior mean and variance are the same as the results calculated by the formula as well. As Bolstad (2007) mentioned, it is necessary for us to know where the posterior distribution is located on the number line. Here, we provide two possible methods to measure the location: posterior mean and posterior median. The posterior mean, or named the expected value, is a frequent measure of location. If distributions have heavy tails such as skewed distributions, then the mean of posterior could be affected strongly, a distance away from the most probabilities. However, for beta distributions, which do not have the heavy tails, mean is a good choice to measure the location. The 50$\%$ quantile of the posterior distribution, also called posterior median, is another good measure of location. From the function results, the posterior mean and median are similar here, 0.35 and 0.3449 respectively.
+It can be recognized that the posterior mean and variance are the same as the results calculated by the formula as well. As Bolstad (2007) mentioned, it is necessary for us to know where the posterior distribution is located on the number line. Here, we provide two possible methods to measure the location: posterior mean and posterior median. The posterior mean, or named the expected value, is a frequent measure of location. If distributions have heavy tails such as skewed distributions, then the mean of the posterior could be affected strongly, a distance away from the most probabilities. However, for beta distributions, which do not have the heavy tails, mean is a good choice to measure the location. The 50$\%$ quantile of the posterior distribution, also called posterior median, is another good measure of location. From the function results, the posterior mean and median are similar here, 0.35 and 0.3449 respectively.
 
-The second thing we want to know is the spread of the posterior distribution. There are three possible measures of spread we can consider: posterior variance, posterior variance, posterior standard deviation and posterior quantiles. The variance of posterior is also affected by the heavy-tail distributions. With the squared units, it is difficult to explain the size with reference to the size of the mean. Due to this, we should use the posterior standard deviation, which is in terms of units (Bolstad, 2007). Moreover, we provide the 5$\%$, 25$\%$, 50$\%$, 75$\%$ and 95 $\%$
-quantiles of the posterior distribution to show the spread of widely probabilities lies between 0.1875 and 0.53.
+The second thing we want to know is the spread of the posterior distribution. There are three possible measures of spread we can consider: posterior variance, posterior variance, posterior standard deviation and posterior quantiles. The variance of the posterior is also affected by the heavy-tail distributions. With the squared units, it is difficult to explain the size with reference to the size of the mean. Due to this, we should use the posterior standard deviation, which is in terms of units (Bolstad, 2007). Moreover, we provide the 5$\%$, 25$\%$, 50$\%$, 75$\%$ and 95 $\%$ quantiles of the posterior distribution to show the spread of widely probabilities lies between 0.1875 and 0.53.
 
-Then, we use function `plot()` to draw prior and posterior distribution. Standard graphical parameters can be supplied by the user to alter the appearance of the plot.  In this case we choose the line style using `lty` and the size of the text in the legend using `cex`.
+Then, we use function `plot()` to draw prior and posterior distribution. Standard graphical parameters can be supplied by the user to alter the appearance of the plot.  In this case, we choose the line style using `lty` and the size of the text in the legend using `cex`.
 ```{r,fig.align='center',fig.height=3, fig.width=3.5}
 plot(ex, lty = 1:2, cex=0.5)
 ```
 
-Since the prior distribution and the posterior distribution are both from the Beta family, we can see that they have the characteristic shape of the Beta family. Moreover, the posterior distribution is more concentrated than the prior, because the posterior is the degree of beliefs after observing the data.
+Since the prior distribution and the posterior distribution are both from the beta family, we can see that they have the characteristic shape of the beta family. Moreover, the posterior distribution is more concentrated than the prior, because the posterior is the degree of belief after observing the data.
 
 In this example, we have used an informative the prior distribution. If we do not have any information about the $\theta$, we might select the uniform prior which gives equal weight to all possible values of $\theta$.
 ```{r,fig.show = "hold", fig.height=3, fig.width=3, results = "hide"}
@@ -90,7 +88,7 @@ plot(ex, lty = 1:2, cex=0.5, main = "Beta(4,6) Prior",xlim=c(0,1), ylim=c(0,4))
 
 It can be seen that the two resulting posterior distributions are fairly similar, though the posterior distribution with informative prior is more concentrated. 
 
-Moreover, if there is a strong prior information that the probability of success $\theta$ is small, we may utilize the shape properties of Beta distribution to select Beta(0.5,1) or Beta(0.5,2) as the prior distribution.
+Moreover, if there is a strong prior information that the probability of success $\theta$ is small, we may utilize the shape properties of beta distribution to select Beta(0.5,1) or Beta(0.5,2) as the prior distribution.
 ```{r,fig.show = "hold", fig.height=3, fig.width=3, results = "hide"}
 be1 <- binombeta(0.5, 1, 10, 3)
 be2 <- binombeta(0.5, 2, 10, 3)
@@ -101,7 +99,7 @@ plot(be2, lty = 1:2, cex=0.5, main = "Beta(0.5,2) Prior",xlim=c(0,1), ylim=c(0,4
 We can also recognize that given the data, the resulting posterior distributions are similar though beginning with different priors. However, with the latter two priors, the posterior distribution for $\theta$ is concentrated on slightly smaller values of $\theta$, as we would expect. 
 
 ###  Using `normnorm()`
-Consider the example in the normal distribution with unknown mean parameter at first. Suppose $X_{i}$, $i= 1,\ldots,9$ are independent $\mathcal{N}(\theta,4)$ and that the prior distribution of $\theta$ is $\mathcal{N}(25,10)$. Supposed that the observed sample mean is 20. Then, we can use `normnorm()` to find the mean and variance of normal posterior distribution as follow.
+Consider the example in the normal distribution with unknown mean parameter at first. Suppose $X_{i}$, $i= 1,\ldots,9$ are independent $\mathcal{N}(\theta,4)$ and that the prior distribution of $\theta$ is $\mathcal{N}(25,10)$. Supposed that the observed sample mean is 20. Then, we can use `normnorm()` to find the mean and variance of normal posterior distribution as follows.
 ```{r}
 ## generate a sample of 9 from a normal distribution with sd=2
 x <- rnorm(9, sd = 2)
@@ -116,14 +114,14 @@ Checking the outputs, they are same as the results obtained from calculating by 
 summary(exmp1)
 ```
 
-Based on the posterior mean and standard deviation, we can know the location and spread of the posterior distribution. The posterior median is the same as the posterior mean, equals 20.2128, since it is the normal distribution. From the quantiles, we know that the majority posterior probabilities lies between 19.1398 and 21.2858.
+Based on the posterior mean and standard deviation, we can know the location and spread of the posterior distribution. The posterior median is the same as the posterior mean, equals 20.2128, since it is the normal distribution. From the quantiles, we know that the most posterior probabilities lies between 19.1398 and 21.2858.
 
 Utilizing `plot()` to show prior and posterior distribution together.
 ```{r,fig.align='center',fig.height=3, fig.width=3.5}
 plot(exmp1, leg_pos = "right", cex = 0.5)
 ```
 
-We can recognize that they have similar shapes because they are both normal distributions. Given the sample data $X$, the distribution of posterior is much more concentrated than that of prior.
+We can recognize that they have similar shapes because they are both normal distributions. Given the sample data $X$, the distribution of the posterior is much more concentrated than that of the prior.
 
 Now, consider another example in the normal distribution with unknown mean and unknown variance. Suppose $Y_{i}$, $i= 1,\cdots,9$ are independent $\mathcal{N}(\mu,\sigma^{2})$, and the prior distribution of unknown $\mu$ and precision $\tau$ $(= 1/\sigma^{2})$ follows the normal-gamma distribution $\mathcal{NG}(\mu,\tau; m = 1, s = 2, \alpha = 1, \beta = 1)$. Using
 `normnorm()` to find the posterior distribution and `summary()` to summarized statistics.
@@ -156,7 +154,7 @@ plot(exmp2, which = 4, main = "Posterior Contour",
            xlim = c(-5,5), ylim = c(0,6), cex = 0.5)
 ```
 
-We can notice that the contour plot of posterior looks like a "squashed egg". Compared with the prior contour, the posterior contour, after observing the data, is much more smoothly and narrow. 
+We can notice that the contour plot of the posterior looks like a "squashed egg". Compared with the prior contour, the posterior contour, after observing the data, is much more smoothly and narrow. 
 
 ## Function for Bayesian Hypothesis Testing
 The `normaltest()` function performs Bayesian hypothesis testing with normal distribution. The Bayesian hypothesis testing is based on the posterior distribution $\pi(\theta \mid x)$, and the decision is to reject or accept the null hypothesis according to which decision provides the smaller losses. The loss of rejecting the null hypothesis is $a$ times the probability of the null is true, where a is the loss due to type I error. The loss of accepting the null hypothesis is b times the probability of the null is false, where $b$ is the loss due to type II error. 
@@ -178,10 +176,11 @@ normaltest(exmp1, 5, 1, 1)
 The testing result and expected posterior loss are the same as the outcome we calculated by the formula.
 
 ## References
-Bolstad, W. M. (2007). $\textit{Introduction to bayesian statistics}$(2nd ed.).  John Wiley $\&$ Sons.
+Bolstad, W. M. (2007). $\textit{Introduction to Bayesian Statistics}$(2nd ed.). John Wiley $\&$ Sons.
 
 Fink,D. (1997). $\textit{A  Compendium  of  Conjugate  Priors}$ [online].
-Available from: www.researchgate.net/publication/238622435ACompendiumofConjugatePriors [Accessed10 August 2017].
+Available from: www.researchgate.net/publication/238622435
+ACompendiumofConjugatePriors [Accessed10 August 2017].
 
 Schlaifer, R., $\&$ Raiffa, H.  (1961). $\textit{Applied Statistical Decision Theory}$.  Harvard University.
 
